@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/ContractHello.dir/main.cpp.o  -o ContractHello /usr/local/lib/libboost_program_options.a eoslib_definitions/libsystem.a eoslib_definitions/libprint.a eoslib_definitions/libmessage.a eosContract/libcontract.a eoslib_definitions/libsystem.a eoslib_definitions/libprint.a eoslib_definitions/libmessage.a 
