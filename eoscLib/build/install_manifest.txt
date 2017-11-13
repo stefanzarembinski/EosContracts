@@ -1,0 +1,7 @@
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/bin/ContractHello
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/include/config.h
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/lib/libprint.a
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/lib/libmessage.a
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/lib/libsystem.a
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/lib/libcontract.a
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/../install/include/contract.hpp
