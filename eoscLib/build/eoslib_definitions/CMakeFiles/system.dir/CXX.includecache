@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/hgfs/Workspaces/EOS/EosContracts/eoscLib/eoslib_definitions/system.cpp
+eoslib/system.h
+-
+
+/mnt/hgfs/Workspaces/EOS/eos/contracts/eoslib/system.h
+eoslib/types.h
+-
+
+/mnt/hgfs/Workspaces/EOS/eos/contracts/eoslib/types.h
+
