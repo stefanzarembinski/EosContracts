@@ -7,7 +7,7 @@
  (import "env" "printi" (func $printi (param i64)))
  (import "env" "printn" (func $printn (param i64)))
  (import "env" "prints" (func $prints (param i32)))
- (import "env" "readMessage" (func $readMessage (param i32 i32) (result i32)))
+ (import "env" "read_message" (func $read_message (param i32 i32) (result i32)))
  (table 0 anyfunc)
  (memory $0 1)
  (data (i32.const 4) "\b0@\00\00")
@@ -212,7 +212,7 @@
    )
    (call $assert
     (i32.gt_u
-     (call $readMessage
+     (call $read_message
       (i32.add
        (get_local $7)
        (i32.const 8)

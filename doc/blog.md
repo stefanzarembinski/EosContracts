@@ -116,13 +116,40 @@ redeclared as different kind of symbol
 
 In file included from /usr/include/pthread.h:24:0,
 
+
+
 ## Letter
 
 We are interested in building a development tool for EOS contracts that could be comparable to the Truffle device.
 
 Our effort could be much easer if you would approve the following formal changes in the code of the *contracts* part:
 
-* Some of the type definitions in *eoslib/types.h* conflict with **standard libraries**. Could not they be put into a namespace:
+* There are type definitions in *eoslib/types.h* that conflict with some standard libraries, for example:
+
+```
+eos/contracts/eoslib/types.h:27:33: error: conflicting declaration ‘typedef unsigned int size_t’
+    typedef unsigned int         size_t;
+                                 ^~~~~~
+/usr/lib/gcc/x86_64-linux-gnu/7/include/stddef.h:216:23: note: previous declaration as ‘typedef long unsigned int size_t’
+ typedef __SIZE_TYPE__ size_t;
+                       ^~~~~~
+
+//////////////////////////////////////
+eos/contracts/eoslib/types.h:27:33: error: ‘typedef uint32_t time’ redeclared as different kind of symbol
+    typedef uint32_t             time;
+                                 ^~~~
+/usr/include/time.h:75:15: note: previous declaration ‘time_t time(time_t*)’
+ extern time_t time (time_t *__timer) __THROW;                       
+
+///////////////////////////////////////
+eos/contracts/eoslib/types.h:25:33: error: conflicting declaration ‘typedef char int8_t’
+    typedef char                 int8_t;
+                                 ^~~~~~
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:24:18: note: previous declaration as ‘typedef __int8_t int8_t’
+ typedef __int8_t int8_t;
+```
+
+Could not they be put into a namespace?
 ```
 namespace eosio{
    typedef long long            int64_t;
@@ -141,16 +168,9 @@ namespace eosio{
 ```
 * The same with two functions in *system.h*, namely *assert* and *now*.
 
-* The formal definition of the *constexpr* function From [cppreference](#http://en.cppreference.com/w/cpp/language/constexpr):
-    * the function body must be either deleted or defaulted or contain only the following:
-        * null statements (plain semicolons)
-        * static_assert declarations
-        
-        * typedef declarations and alias declarations that do not define classes or enumerations
-        * using declarations
-        * using directives
-        * exactly one return statement.
-In *eoslib/types.hpp* there are *constexpr* functions that do not adhere to the definition, and therefore the cause compile errors like this:
+* The formal definition of the *constexpr* function From :
+
+In *eoslib/types.hpp* there are *constexpr* functions that do not adhere to the formal definition [cppreference](#http://en.cppreference.com/w/cpp/language/constexpr), and therefore the cause compile errors like this:
 ```
 /eos/contracts/eoslib/types.hpp:52:4: error: body of constexpr function ‘constexpr eosio::uint64_t eosio::string_to_name(const char*)’ not a return-statement
     }
