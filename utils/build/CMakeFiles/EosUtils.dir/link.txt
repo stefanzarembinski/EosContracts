@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/EosUtils.dir/main.cpp.o  -o EosUtils -pthread /usr/local/lib/libboost_system.a transactions/libtransactions.a -pthread /usr/local/lib/libboost_system.a 
