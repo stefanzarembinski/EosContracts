@@ -45,5 +45,5 @@ void requireAuth(account_name name ){
 *  @return the account which specifies the code that is being run
 */
 account_name currentCode(){
-   
+   return 0;
 }

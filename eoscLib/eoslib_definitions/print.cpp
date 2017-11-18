@@ -5,6 +5,7 @@
 #include <eoslib/types.h>
 #include <eoslib/print.hpp>
 
+// see eos/libraries/chain/wasm_interface.cpp
 /**
 *  Prints string
 *  @brief Prints string

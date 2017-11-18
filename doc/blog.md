@@ -176,3 +176,36 @@ In *eoslib/types.hpp* there are *constexpr* functions that do not adhere to the 
     }
 ```
 Could you consider replacing them with regular functions?
+
+## Cleaning, starting, killing eosd
+
+Extracted from /mnt/hgfs/Workspaces/EOS/eos/tests/eosd_run_test.sh
+
+```
+cd ${EOSIO_INSTALL_DIR}/build
+
+function cleanup()
+{
+  rm -rf tn_data_0
+  rm -rf test_wallet_0
+}
+
+verifyErrorCode()
+{
+  rc=$?
+  if [[ $rc != 0 ]]; then
+    error "FAILURE - $1 returned error code $rc"
+  fi
+}
+
+SERVER="localhost"
+
+programs/launcher/launcher
+//verifyErrorCode "launcher"
+sleep 7
+count=`grep -c "generated block" tn_data_0/stderr.txt`
+if [[ $count == 0 ]]; then
+error "FAILURE - no blocks produced"
+fi
+```
+
