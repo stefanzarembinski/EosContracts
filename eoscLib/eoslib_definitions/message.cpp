@@ -26,7 +26,7 @@ eosio::uint32_t messageSize(){
 *  @brief Add the specified account to set of accounts to be notified
 *  @param name - name of the account to be verified
 */
-void requireNotice(account_name name ){
+void require_notice(account_name name ){
    
 }
 
@@ -35,7 +35,7 @@ void requireNotice(account_name name ){
 *  @brief Verify specified account exists in the set of provided auths
 *  @param name - name of the account to be verified
 */
-void requireAuth(account_name name ){
+void require_auth(account_name name ){
    
 }
 

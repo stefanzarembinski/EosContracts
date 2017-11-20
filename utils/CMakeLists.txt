@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 3.6)
 project (EosUtils)
-
 include(../eosContracts.cmake)
-set(CMAKE_BUILD_TYPE Debug)
 
 # The version number.
 set (VERSION_MAJOR 1)
@@ -18,13 +16,17 @@ configure_file (
 # so that we will find config.h
 include_directories("${PROJECT_BINARY_DIR}") 
 
+#### FIND DEPENDENCIES ####
+
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system)
+
+#### DEFINE TARGET ####
+
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
-
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED) # boost::asio wants it.

@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 3.6)
-project (ContractHello)
-
+project (EosLib)
 include(../eosContracts.cmake)
-set(CMAKE_BUILD_TYPE Debug)
 
 # The version number.
 set (VERSION_MAJOR 1)
@@ -30,16 +28,14 @@ find_package(Boost 1.64.0 REQUIRED COMPONENTS program_options)
 include_directories(${Boost_INCLUDE_DIRS})
 add_subdirectory (eoslib_definitions)
 include_directories ("${PROJECT_SOURCE_DIR}/eoslib_definitions")
-add_subdirectory (eosContract)
-include_directories("${PROJECT_SOURCE_DIR}/eoscContract")
-include_directories("/mnt/hgfs/Workspaces/EOS/eos/contracts")
+include_directories("${EOSIO_INSTALL_DIR}//contracts")
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} system)
 target_link_libraries(${PROJECT_NAME} print)
 target_link_libraries(${PROJECT_NAME} message)
-target_link_libraries(${PROJECT_NAME} contract)
+target_link_libraries(${PROJECT_NAME} db)
 
 #### INSTALL
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
