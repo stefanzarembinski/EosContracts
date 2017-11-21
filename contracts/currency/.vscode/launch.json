@@ -8,7 +8,7 @@
          "name": "(gdb) Launch",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceFolder}/../install/bin/CurrencyContract",
+         "program": "${workspaceFolder}/../../install/bin/CurrencyContract",
          "args": [],
          "stopAtEntry": false,
          "cwd": "${workspaceFolder}",

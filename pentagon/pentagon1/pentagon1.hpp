@@ -7,13 +7,11 @@ namespace pentagon{
    
 using namespace std;
 
-   extern "C" {
-      void eos_name2string(
-         const unsigned long long ull, 
-         const char* out);
-      unsigned long long eos_name2uint(
-         const char* name);
-   }
+   string eos_name(
+      const unsigned long long ull);
+
+   unsigned long long eos_name(
+      const char* str);
 
    extern string callEosd(
       const string& server, 

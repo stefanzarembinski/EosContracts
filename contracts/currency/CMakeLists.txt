@@ -18,4 +18,4 @@ target_link_libraries(${PROJECT_NAME} ${INSTALL_DIR}/lib/libsystem.a)
 target_link_libraries(${PROJECT_NAME} ${INSTALL_DIR}/lib/libdb.a)
 
 
-#install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${INSTALL_DIR}/bin)

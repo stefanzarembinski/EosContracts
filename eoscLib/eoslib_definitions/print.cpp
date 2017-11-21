@@ -99,8 +99,7 @@ void printd(eosio::uint64_t value)
 */
 void printn(eosio::uint64_t ull)
 {
-   pentagon::eos_name2string(ull, NULL);
-   fprintf(stdout, "%s", "");
+   fprintf(stdout, "%s", pentagon::eos_name(ull).c_str());
 }
 
 /**
