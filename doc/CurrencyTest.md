@@ -43,6 +43,11 @@ jq '.processed.messages' <<< "$contractSet"
 (...)
 
 eosc push message currency transfer '{"from":"currency","to":"inita","amount":50}' --scope currency,inita --permission currency@active
+##
+## code: 5093418677655568384; name(code): currency name(code).value: 5093418677655568384 N(name(code).value): 11071149854176575926
+## action: 14829575313431724032; name(action): transfer
+## Transfer 50 currency from 5093418677655568384 to 8421048506461978624
+
 jq '.processed.messages' <<< "$messagePushed"
 ```
 ```

@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <eoslib/message.hpp>
 
 /**
@@ -7,7 +8,9 @@
 *  @param len - len of the current message to be copied
 *  @return the number of bytes copied to msg
 */
-eosio::uint32_t read_message( void* msg, eosio::uint32_t len ){
+eosio::uint32_t read_message(void *msg, eosio::uint32_t len)
+{
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -17,7 +20,9 @@ eosio::uint32_t read_message( void* msg, eosio::uint32_t len ){
 * @brief Get the length of current message's data field
 * @return the length of the current message's data field
 */
-eosio::uint32_t messageSize(){
+eosio::uint32_t messageSize()
+{
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -26,8 +31,9 @@ eosio::uint32_t messageSize(){
 *  @brief Add the specified account to set of accounts to be notified
 *  @param name - name of the account to be verified
 */
-void require_notice(account_name name ){
-   
+void require_notice(account_name name)
+{
+   throw std::runtime_error("Not implemented yet!");
 }
 
 /**
@@ -35,8 +41,9 @@ void require_notice(account_name name ){
 *  @brief Verify specified account exists in the set of provided auths
 *  @param name - name of the account to be verified
 */
-void require_auth(account_name name ){
-   
+void require_auth(account_name name)
+{
+   throw std::runtime_error("Not implemented yet!");
 }
 
 /**
@@ -44,6 +51,8 @@ void require_auth(account_name name ){
 *  @brief Get the account which specifies the code that is being run
 *  @return the account which specifies the code that is being run
 */
-account_name currentCode(){
+account_name currentCode()
+{
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }

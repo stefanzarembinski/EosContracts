@@ -1,4 +1,5 @@
 
+include_directories("${CMAKE_INSTALL_PREFIX}/include")
 include_directories("${EOSIO_INSTALL_DIR}/contracts")
 add_library(print print.cpp)
 add_library(message message.cpp)

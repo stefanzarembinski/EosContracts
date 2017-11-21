@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.6)
-project (EosUtils)
-include(../eosContracts.cmake)
+project (pentagon)
+include(../config.cmake)
 
 # The version number.
 set (VERSION_MAJOR 1)
@@ -23,20 +23,20 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system)
 
-#### DEFINE TARGET ####
-
-include_directories(${Boost_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)
 find_package(Threads REQUIRED) # boost::asio wants it.
+
+add_subdirectory(pentagon1)
+
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories("${PROJECT_SOURCE_DIR}/pentagon1")
+
+add_executable(${PROJECT_NAME} config.h main.cpp)
+
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
-
-add_subdirectory(transactions)
-include_directories("${PROJECT_SOURCE_DIR}/transactions")
-
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} transactions)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} pentagon1)
 
 # add the install targets: make install
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)

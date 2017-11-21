@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <eoslib/system.h>
 
 /**
@@ -7,8 +8,9 @@
 *  @param cstr - a null terminated message to explain the reason for failure
 
 */
-void  eosio::assert( eosio::uint32_t test, const char* cstr ){
-   
+void eosio::assert(eosio::uint32_t test, const char *cstr)
+{
+   throw std::runtime_error("Not implemented yet!");
 }
 
 /**
@@ -16,6 +18,8 @@ void  eosio::assert( eosio::uint32_t test, const char* cstr ){
 *  @brief Get time of the last accepted block
 *  @return time in seconds from 1970 of the last accepted block
 */
-eosio::time  now(){
+eosio::time now()
+{
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }

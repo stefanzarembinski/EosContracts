@@ -6,17 +6,15 @@
 #include <boost/asio.hpp>
 //#include <boost/log/trivial.hpp>
 #include <pthread.h>
-
-#include "transactions.hpp"
+#include "pentagon1.hpp"
 
 using namespace std;
 
-string callEsod( 
+string pentagon::callEosd( 
    const string& server, 
    const string& port, 
    const string& path,
    const string& postjson){
-         
    return "";
 }
 
@@ -27,7 +25,7 @@ string errorJson (string message){
    return "";
 }
 
-string callEosd1(
+string pentagon::callEosd1(
    const string& server, 
    const string& port, 
    const string& path,
@@ -49,7 +47,7 @@ string callEosd1(
          may contain both IPv4 and IPv6 endpoints, so each of them has to be
          tried, until one that works. This keeps the client program 
          independent of a specific IP version. boost::asio::connect() function 
-         does this automatically.
+         does theos_contracts::is automatically.
          */
          tcp::socket socket(io_service);
          boost::asio::connect(socket, endpoint_iterator);

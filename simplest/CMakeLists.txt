@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.6)
 project (Simplest)
 
-include(../eosContracts.cmake)
+include(../config.cmake)
 
 set(CMAKE_BUILD_TYPE Debug)
 

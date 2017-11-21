@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include <eoslib/db.h>
 // to list exported functions in a static library: nm libdb.a
 
@@ -66,6 +67,7 @@ eosio::int32_t lower_bound_i64(
     void *data,
     eosio::uint32_t datalen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -76,6 +78,7 @@ eosio::int32_t upper_bound_i64(
     void *data,
     eosio::uint32_t datalen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -84,6 +87,7 @@ eosio::int32_t remove_i64(
     table_name table,
     void *data)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -95,6 +99,7 @@ eosio::int32_t store_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -106,6 +111,7 @@ eosio::int32_t update_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -118,6 +124,7 @@ eosio::int32_t load_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -128,6 +135,7 @@ eosio::int32_t front_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -138,6 +146,7 @@ eosio::int32_t back_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -150,6 +159,7 @@ eosio::int32_t next_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -162,6 +172,7 @@ eosio::int32_t previous_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -174,6 +185,7 @@ eosio::int32_t lower_bound_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -186,6 +198,7 @@ eosio::int32_t upper_bound_str(
     char *value,
     eosio::uint32_t valuelen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -195,6 +208,7 @@ eosio::int32_t remove_str(
    char *key, 
    eosio::uint32_t keylen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -205,6 +219,7 @@ eosio::int32_t load_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -215,6 +230,7 @@ eosio::int32_t front_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -225,6 +241,7 @@ eosio::int32_t back_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -235,6 +252,7 @@ eosio::int32_t next_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -245,6 +263,7 @@ eosio::int32_t previous_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -255,6 +274,7 @@ eosio::int32_t upper_bound_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -265,6 +285,7 @@ eosio::int32_t lower_bound_primary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -275,6 +296,7 @@ eosio::int32_t load_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -285,6 +307,7 @@ eosio::int32_t front_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -295,6 +318,7 @@ eosio::int32_t back_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -305,6 +329,7 @@ eosio::int32_t next_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -315,6 +340,7 @@ eosio::int32_t previous_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -325,6 +351,7 @@ eosio::int32_t upper_bound_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -335,6 +362,7 @@ eosio::int32_t lower_bound_secondary_i128i128(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -343,6 +371,7 @@ eosio::int32_t remove_i128i128(
     table_name table,
     const void *data)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -352,6 +381,7 @@ eosio::int32_t store_i128i128(
     const void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -361,6 +391,7 @@ eosio::int32_t update_i128i128(
     const void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -371,6 +402,7 @@ eosio::int32_t front_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -381,6 +413,7 @@ eosio::int32_t back_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -391,6 +424,7 @@ eosio::int32_t next_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -401,6 +435,7 @@ eosio::int32_t previous_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -411,6 +446,7 @@ eosio::int32_t upper_bound_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -421,6 +457,7 @@ eosio::int32_t lower_bound_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -431,6 +468,7 @@ eosio::int32_t load_secondary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -441,6 +479,7 @@ eosio::int32_t front_secondary_i64i64i64(
    void *data,
    eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -451,6 +490,7 @@ eosio::int32_t back_secondary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -461,6 +501,7 @@ eosio::int32_t next_secondary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -471,6 +512,7 @@ eosio::int32_t previous_secondary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -481,6 +523,7 @@ eosio::int32_t upper_bound_secondary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -491,6 +534,7 @@ eosio::int32_t lower_bound_secondary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -501,6 +545,7 @@ eosio::int32_t back_i64(
     void *data,
     eosio::uint32_t datalen)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -511,6 +556,7 @@ eosio::int32_t load_primary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -521,6 +567,7 @@ eosio::int32_t load_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -531,6 +578,7 @@ eosio::int32_t front_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -541,6 +589,7 @@ eosio::int32_t back_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -551,6 +600,7 @@ eosio::int32_t next_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -561,6 +611,7 @@ eosio::int32_t previous_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -571,6 +622,7 @@ eosio::int32_t upper_bound_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -581,6 +633,7 @@ eosio::int32_t lower_bound_tertiary_i64i64i64(
     void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -589,6 +642,7 @@ eosio::int32_t remove_i64i64i64(
     table_name table,
     const void *data)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -598,6 +652,7 @@ eosio::int32_t store_i64i64i64(
     const void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }
 
@@ -607,5 +662,6 @@ eosio::int32_t update_i64i64i64(
     const void *data,
     eosio::uint32_t len)
 {
+   throw std::runtime_error("Not implemented yet!");
    return 0;
 }

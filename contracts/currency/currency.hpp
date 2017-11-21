@@ -13,16 +13,14 @@
  *  @ingroup contractapi
  *
  */
+  
 
+extern "C" {
+    void init();
+    void apply(eosio::uint64_t code, eosio::uint64_t action );
+}
 
-/**
- * Make it easy to change the account name the currency is deployed to.
- */
-#ifndef TOKEN_NAME
-#define TOKEN_NAME currency
-#endif
-
-namespace TOKEN_NAME {
+namespace currency {
 
   /**
    *  @defgroup currencyapi Currency Contract
@@ -95,7 +93,7 @@ namespace TOKEN_NAME {
    /**
     *  accounts information for owner is stored:
     *
-    *  owner/TOKEN_NAME/account/account -> account
+    *  owner/currency/account/account -> account
     *
     *  This API is made available for 3rd parties wanting read access to
     *  the users balance. If the account doesn't exist a default constructed

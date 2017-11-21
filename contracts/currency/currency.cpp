@@ -5,7 +5,7 @@
 
 #include "currency.hpp" /// defines transfer struct (abi)
 
-namespace TOKEN_NAME {
+namespace currency {
    using namespace eosio;
 
    ///  When storing accounts, check for empty balance and remove account
@@ -19,7 +19,7 @@ namespace TOKEN_NAME {
       }
    }
 
-   void apply_currency_transfer( const TOKEN_NAME::transfer& transfer_msg ) {
+   void apply_currency_transfer( const currency::transfer& transfer_msg ) {
       require_notice( transfer_msg.to, transfer_msg.from );
       require_auth( transfer_msg.from );
 
@@ -33,9 +33,9 @@ namespace TOKEN_NAME {
       store_account( transfer_msg.to, to );
    }
 
-}  // namespace TOKEN_NAME
+}  // namespace currency
 
-using namespace TOKEN_NAME;
+using namespace currency;
 
 extern "C" {
    void init(){
@@ -48,23 +48,6 @@ extern "C" {
       store_account( N(currency), account( currency_tokens(1000ll*1000ll*1000ll) ) );
    }
 
-   void apply12 (eosio::name code, eosio::name action){
-      if( N(code.value) == N(currency) ) {
-         if( N(action.value) == N(transfer) ){
-            auto message = eosio::current_message<TOKEN_NAME::transfer>();
-            eosio::print( 
-               "Transfer ", 
-               message.quantity, 
-               " from ", message.from, 
-               " to ", message.to, 
-               "\n" );
-            
-            TOKEN_NAME::apply_currency_transfer( current_message< TOKEN_NAME::transfer >() );
-         }
-      }
-   }
-
-   /// The apply method implements the dispatch of events to this contract
    void apply( eosio::uint64_t code, eosio::uint64_t action ) {
       eosio::print( 
          "code: ", code, "; name(code): ", name(code),
@@ -77,15 +60,42 @@ extern "C" {
 
       if( code == N(currency) ) {
          if( action == N(transfer) ){
-            auto message = eosio::current_message<TOKEN_NAME::transfer>();
+            currency::transfer message;
+            message.quantity = currency_tokens(50);
+            message.from = account_name(5093418677655568384);
+            message.to = account_name(8421048506461978624);
+            
             eosio::print( 
-               "Transfer ", 
-               message.quantity, 
+               "Transfer ", message.quantity, 
                " from ", message.from, 
                " to ", message.to, 
                "\n" );
             
-            TOKEN_NAME::apply_currency_transfer( current_message< TOKEN_NAME::transfer >() );
+            currency::apply_currency_transfer( current_message< currency::transfer >() );
+         }
+      }
+   }
+
+   void applyOrig( eosio::uint64_t code, eosio::uint64_t action ) {
+      eosio::print( 
+         "code: ", code, "; name(code): ", name(code),
+         "; name(code).value: ", name(code).value,
+         "; N(name(code).value): ", N(name(code).value),
+         "\n",
+         "action: ", action, "; name(action): ", name(action),
+         "\n"
+      );
+
+      if( code == N(currency) ) {
+         if( action == N(transfer) ){
+            auto message = eosio::current_message<currency::transfer>();
+            eosio::print( 
+               "Transfer ", message.quantity, 
+               " from ", message.from, 
+               " to ", message.to, 
+               "\n" );
+            
+            currency::apply_currency_transfer( current_message< currency::transfer >() );
          }
       }
    }

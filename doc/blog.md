@@ -7,9 +7,9 @@ export CXX=/usr/bin/clang++
 ## -- The C compiler identification is Clang
 ## -- The CXX compiler identification is Clang
 
-```
+``
 ERROR: 
-/mnt/hgfs/Workspaces/EOS/EosContracts/utils/main.cpp:50:27: warning: range-based for loop is a C++11 extension [-Wc++11-extensions]
+/mnt/hgfs/Workspaces/EOS/EosContracts/eosContracts/main.cpp:50:27: warning: range-based for loop is a C++11 extension [-Wc++11-extensions]
 
 With the following setting, the error remains!!!!!!!!!
 ```

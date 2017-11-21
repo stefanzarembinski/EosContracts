@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.6)
 project (EosLib)
-include(../eosContracts.cmake)
+include(../config.cmake)
 
 # The version number.
 set (VERSION_MAJOR 1)
@@ -30,13 +30,3 @@ add_subdirectory (eoslib_definitions)
 include_directories ("${PROJECT_SOURCE_DIR}/eoslib_definitions")
 include_directories("${EOSIO_INSTALL_DIR}//contracts")
 
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} system)
-target_link_libraries(${PROJECT_NAME} print)
-target_link_libraries(${PROJECT_NAME} message)
-target_link_libraries(${PROJECT_NAME} db)
-
-#### INSTALL
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-install(FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)

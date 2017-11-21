@@ -2,8 +2,11 @@
 //#include <iostream>
 
 #include <stdio.h>
+#include <stdexcept>
+#include <string>
 #include <eoslib/types.h>
-#include <eoslib/print.hpp>
+#include <eoslib/print.h>
+#include <pentagon1.hpp>
 
 // see eos/libraries/chain/wasm_interface.cpp
 /**
@@ -16,9 +19,9 @@
 *  prints("Hello World!"); // Output: Hello World!
 *  @endcode
 */
-void prints( const char* cstr ){
-    //cout << cstr << flush;
-    fprintf(stdout, "%s", cstr);
+void prints(const char *cstr)
+{
+   fprintf(stdout, "%s", cstr);
 }
 
 /**
@@ -32,9 +35,9 @@ void prints( const char* cstr ){
 *  prints_l("Hello World!", 5); // Output: Hello
 *  @endcode
 */
-void prints_l( const char* cstr, eosio::uint32_t len){
-    //cout.write(cstr, len);
-    //cout.flush();
+void prints_l(const char *cstr, eosio::uint32_t len)
+{
+   throw std::runtime_error("Not implemented yet!");
 }
 
 /**
@@ -47,7 +50,9 @@ void prints_l( const char* cstr, eosio::uint32_t len){
 *  printi(1e+18); // Output: 1000000000000000000
 *  @endcode
 */
-void printi( eosio::uint64_t value ){
+void printi(eosio::uint64_t value)
+{
+   fprintf(stdout, "%llu", value);
 }
 
 /**
@@ -61,7 +66,9 @@ void printi( eosio::uint64_t value ){
 *  printi128(large_int); // Output: 87654323456
 *  @endcode
 */
-void printi128( const eosio::uint128_t* value ){
+void printi128(const eosio::uint128_t *value)
+{
+   throw std::runtime_error("Not implemented yet!");
 }
 
 /**
@@ -75,7 +82,9 @@ void printi128( const eosio::uint128_t* value ){
 *  printd(double_value); // Output: 0.5
 *  @endcode
 */
-void printd(eosio::uint64_t value){
+void printd(eosio::uint64_t value)
+{
+   throw std::runtime_error("Not implemented yet!");
 }
 
 /**
@@ -88,10 +97,15 @@ void printd(eosio::uint64_t value){
 * printn(N(abcde)); // Output: abcde
 * @endcode
 */
-void printn( eosio::uint64_t name ){  
+void printn(eosio::uint64_t ull)
+{
+   pentagon::eos_name2string(ull, NULL);
+   fprintf(stdout, "%s", "");
 }
 
 /**
 */
-void printhex( void* data, eosio::uint32_t datalen ){
+void printhex(void *data, eosio::uint32_t datalen)
+{
+   throw std::runtime_error("Not implemented yet!");
 }

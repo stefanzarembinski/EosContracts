@@ -5,7 +5,7 @@
 
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
-#include "transactions/transactions.hpp"
+#include "pentagon1/pentagon1.hpp"
 
 void tryJson () {
    namespace pt = boost::property_tree;
@@ -68,7 +68,7 @@ int main (int argc, char *argv[]) {
    const string path = "/v1/chain/get_info";
    const string postjson = "";
 
-   callEsod(server, port, path, postjson);
+   pentagon::callEosd(server, port, path, postjson);
    //callEsod(server, port, path, postjson);
 
    return 0;
