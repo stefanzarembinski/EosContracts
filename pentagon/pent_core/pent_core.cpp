@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string>
 #include <boost/algorithm/string/trim.hpp>
-#include "pentagon1.hpp"
+#include "pent_core.hpp"
 
 using namespace std;
 

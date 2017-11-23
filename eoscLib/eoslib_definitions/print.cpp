@@ -6,7 +6,7 @@
 #include <string>
 #include <eoslib/types.h>
 #include <eoslib/print.h>
-#include <pentagon1.hpp>
+#include <pent_core.hpp>
 
 // see eos/libraries/chain/wasm_interface.cpp
 /**

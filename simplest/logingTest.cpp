@@ -1,14 +1,3 @@
-Boost C++ Libraries
-...one of the most highly regarded and expertly designed C++ library projects in the world.
-— Herb Sutter and Andrei Alexandrescu, C++ Coding Standards
-This is the documentation for an old version of Boost. Click here to view this page for the latest version.
-libs/log/example/doc/tutorial_fmt_stream.cpp
-/*
- *          Copyright Andrey Semashev 2007 - 2015.
- * Distributed under the Boost Software License, Version 1.0.
- *    (See accompanying file LICENSE_1_0.txt or copy at
- *          http://www.boost.org/LICENSE_1_0.txt)
- */
 
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 #include <boost/log/trivial.hpp>
@@ -87,10 +76,3 @@ int main(int, char*[])
 
     return 0;
 }
-Revised $Date$
-Copyright Beman Dawes, David Abrahams, 1998-2005.
-Copyright Rene Rivera 2004-2008.
-Distributed under the Boost Software License, Version 1.0.
-XHTML 1.0
-CSS
-OSI Certified

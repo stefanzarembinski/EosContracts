@@ -3,73 +3,76 @@
 #include <iostream>
 #include <string>
 
-#include "boost/property_tree/ptree.hpp"
-#include "boost/property_tree/json_parser.hpp"
-#include "pentagon1/pentagon1.hpp"
+#include <boost/algorithm/string.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include "boost/date_time/posix_time/posix_time.hpp"
 
-void tryJson () {
-   namespace pt = boost::property_tree;
-   
-   const char* launchJson = R"EoF(
-{
-   "version": "0.2.0",
-   "configurations": [
-      {
-         "name": "(gdb) Launch",
-         "type": "cppdbg",
-         "request": "launch",
-         "program": "/mnt/hgfs/Workspaces/EOS/eoscBash/Contracts/hello2/build/ContractHello",
-         "args": [],
-         "stopAtEntry": false,
-         "cwd": "${workspaceRoot}",
-         "environment": [],
-         "externalConsole": true,
-         "MIMode": "gdb",
-         "setupCommands": [
-            {
-               "description": "Enable pretty-printing for gdb",
-               "text": "-enable-pretty-printing",
-               "ignoreFailures": true
-            }
-         ]
-      }
-   ]
-}
-)EoF";
-
-   std::cout << "Original json string:" << std::endl << std::endl;  
-   std::cout << launchJson << std::endl;  
-   
-   std::stringstream inputString;
-   inputString << launchJson;
-
-   pt::ptree json;
-   pt::read_json(inputString, json);
-   json.put("version", "1.1.1");
- 
-   std::stringstream outputString;
-   pt::write_json(outputString, json);
-
-   std::cout << std::endl << "Processed json string:" << std::endl << std::endl;
-   std::cout << outputString.str() << std::endl;
-   
-   //pt::write_json(std::cout, json);
-
-}
+#include "pent_core/pent_core.hpp"
 
 int main (int argc, char *argv[]) {
 
-   tryJson();
-
    using namespace std;
 
-   const string server = "localhost";
-   const string port = "8888";
-   const string path = "/v1/chain/get_info";
-   const string postjson = "";
+   const string server("localhost");
+   const string port("8888");
+   const string path("/v1/chain/get_info");
+   const string postjson("");
 
-   pentagon::callEosd(server, port, path, postjson);
-   //callEsod(server, port, path, postjson);
+   /*
+   "":151,
+   "":134,
+   "":"00000097d4e0e5b1fbacadf470c956e4d85522d54c8d8375709ed68a22bdad65",
+   "":"2017-11-22T15:12:45",
+   "":"initq",
+   "":"1111111111111111111111111111111111111111111111111111111111111111",
+   "":"1.00000000000000000"
+   */
+   struct get_info
+   {
+      // get_info(){
+      //    string resp = pentagon::callEosd(server, port, path, postjson);
+      //    try{
+      //       pt::read_json(s_in, tree);
+      //    }catch(...){
+      //       cerr << "Failed to read config json with unknown error";
+      //       return 1;
+      //    }
+      // }
+
+      string head_block_num;
+      uint last_irreversible_block_num;
+      string head_block_id;
+      boost::posix_time::ptime head_block_time;
+      string head_block_producer;
+      string recent_slots;
+      float participation_rate;
+   };
+
+   // string resp = pentagon::callEosd(server, port, path, postjson, );
+   // namespace pt = boost::property_tree;
+   // pt::ptree tree;
+   // stringstream s_in;
+   // s_in << resp;
+   // try{
+   //    pt::read_json(s_in, tree);
+   // }catch(...){
+   //    cerr << "Failed to read config json with unknown error";
+   //    return 1;
+   // }
+   // stringstream s_out;
+   // pt::json_parser::write_json(s_out, tree);
+   // cout << s_out.str() << endl;
+   // string head_block_time = tree.get<string>("head_block_time");
+   // cout << head_block_time << endl;
+   // head_block_time = boost::replace_all_copy(head_block_time, "-", "");
+   // head_block_time = boost::replace_all_copy(head_block_time, ":", "");
+   // cout << head_block_time << endl;
+
+   // boost::posix_time::ptime t((boost::posix_time::from_iso_string)(head_block_time));
+   // cout << t << endl;
+   // boost::posix_time::ptime t1 = t + boost::posix_time::seconds(900);
+   // cout << (boost::posix_time::to_iso_extended_string)(t1) << endl;
 
    return 0;
 }

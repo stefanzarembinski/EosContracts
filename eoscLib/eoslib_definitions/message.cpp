@@ -33,7 +33,7 @@ eosio::uint32_t messageSize()
 */
 void require_notice(account_name name)
 {
-   throw std::runtime_error("Not implemented yet!");
+   fprintf(stdout, "require_notice: not implemented yet!");
 }
 
 /**
