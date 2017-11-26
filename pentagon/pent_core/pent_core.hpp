@@ -1,8 +1,10 @@
+#pragma once
+
 #include <stdlib.h>
 #include <string>
 #include <boost/property_tree/ptree.hpp>
 
-#pragma once
+#define ERROR "error" // Error json key
 
 namespace pentagon{
 
@@ -13,9 +15,9 @@ namespace pentagon{
       const char* str);
 
    extern void callEosd(
-      const std::string& server, 
-      const std::string& port, 
-      const std::string& path,
-      const std::string& postjson,
+      std::string server, 
+      std::string port, 
+      std::string path,
+      std::string postjson,
       boost::property_tree::ptree &tree);
 }

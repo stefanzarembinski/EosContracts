@@ -3,6 +3,8 @@
  *  @copyright defined in eos/LICENSE.txt
  */
 
+#pragma once
+
 #include <eoslib/eos.hpp>
 #include <eoslib/token.hpp>
 #include <eoslib/db.hpp>
