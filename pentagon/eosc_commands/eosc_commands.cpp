@@ -176,16 +176,37 @@ namespace pentagon{
     }
   }
 
+/*
+ Definitions for eosc_command class.
+ */
     std::string eosc_command::to_string_post(bool pretty) const {
       std::stringstream ss;
+      try{
       boost::property_tree::json_parser::
-        write_json(ss, post_json, false);
+        write_json(ss, post_json, pretty);
+      }catch(...){
+        std::stringstream msg;
+        std::exception_ptr p = std::current_exception();
+        msg <<(p ? p.__cxa_exception_type()->name() : "null") << std::endl;
+        return msg.str();
+      }
+      return ss.str();
     }
 
     std::string eosc_command::to_string_rcv(bool pretty) const {
       std::stringstream ss;
-      boost::property_tree::json_parser::
-        write_json(ss, post_json, false);
+      try{
+        boost::property_tree::json_parser::
+          write_json(ss, rcv_json, pretty);
+      } catch(...){
+        std::stringstream msg;
+        std::exception_ptr p = std::current_exception();
+        msg <<(p ? p.__cxa_exception_type()->name() : "null") << std::endl;
+        return msg.str();
+      }
+      return ss.str();
     }
+
+
     
 }

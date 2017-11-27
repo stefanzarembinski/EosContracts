@@ -15,7 +15,16 @@ int main (int argc, char *argv[]) {
 
   using namespace std;
 
+  cout << pentagon::get_info::help << pentagon::eosc_command::common_help << endl;
   pentagon::get_info get_info;
+  cout << "is error set = " << get_info.is_error() << endl;
+  cout << get_info.to_string_post() << endl;
+  cout << get_info.to_string_rcv() << endl;
+  if(get_info.is_error()){
+    cout << get_info.to_string_rcv() << endl;
+    return 1;
+  }
+
   cout << get_info.get<string>("last_irreversible_block_num") << endl;
   cout << get_info.get<string>("head_block_time") << endl;
   boost::posix_time::ptime time = get_info.get<boost::posix_time::ptime>("head_block_time");

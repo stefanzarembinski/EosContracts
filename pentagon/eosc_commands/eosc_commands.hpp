@@ -20,26 +20,24 @@ namespace pentagon{
     protected:
       boost::property_tree::ptree post_json;
       boost::property_tree::ptree rcv_json;
-      std::string* error_ptr = NULL;
+      bool is_error_set = false;
 
     public:
-      // eosc_command(boost::property_tree::ptree json){
-      //   post_json = json;
-      // }
+      static constexpr const char* common_help =
+R"EOF(
+  -h,--help ... Print this help message and exit.
+  --default ... Use default args.
+  --post ... Print post json.
+  --json ... Print received json.
+  --pretty
+)EOF";      
 
-      std::string get_error_msg() const {
-        if(error_ptr == NULL){
-          return "Error is not set";
-        }
-        return *error_ptr;
+      bool is_error() const {
+        return is_error_set;
       }
 
       boost::property_tree::ptree get_resp_json() const {
         return rcv_json;
-      }
-
-      virtual std::string get_help(){
-        return std::string("");
       }
 
       std::string to_string_post(bool pretty = true) const;
@@ -47,7 +45,7 @@ namespace pentagon{
       template<typename Type> 
       Type get(const boost::property_tree::ptree::path_type & path) const{
         return get1<Type>(rcv_json, path);
-    }
+    }  
   };
 
   extern bool eosc_command_json(
