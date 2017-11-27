@@ -33,6 +33,8 @@ target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} pent_core)
 target_link_libraries(${PROJECT_NAME} eosc_commands)
+target_link_libraries(${PROJECT_NAME} "${PROJECT_SOURCE_DIR}/build/eosc_commands/libeosc_commands.a")
+
 cotire(${PROJECT_NAME})
 
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)

@@ -21,7 +21,33 @@ namespace pentagon{
       const boost::property_tree::ptree::path_type & path){
       return strtotime(json.get<std::string>(path));
   }
-  
+
+  class init_get1{
+    /*
+    Template function has to be used, in order to force compiler
+    to build specific forms needed elsewhere in the program and 
+    in the library.
+    */
+    public:
+      std::string strVal;
+      int intVal;
+      float floatVal;
+      boost::posix_time::ptime ptime;
+
+      init_get1(){
+        try{
+          boost::property_tree::ptree json;
+          boost::property_tree::ptree::path_type path;
+
+          strVal = get1<std::string>(json, path);
+          intVal = get1<int>(json, path);
+          floatVal = get1<float>(json, path);
+          ptime = get1<boost::posix_time::ptime>(json, path);
+        } catch(...){}
+      }
+  };
+  init_get1 init;
+
   boost::posix_time::ptime strtotime(const std::string str){
     std::string temp = boost::replace_all_copy(str, "-", "");
     temp = boost::replace_all_copy(temp, ":", "");
@@ -150,4 +176,16 @@ namespace pentagon{
     }
   }
 
+    std::string eosc_command::to_string_post(bool pretty) const {
+      std::stringstream ss;
+      boost::property_tree::json_parser::
+        write_json(ss, post_json, false);
+    }
+
+    std::string eosc_command::to_string_rcv(bool pretty) const {
+      std::stringstream ss;
+      boost::property_tree::json_parser::
+        write_json(ss, post_json, false);
+    }
+    
 }
