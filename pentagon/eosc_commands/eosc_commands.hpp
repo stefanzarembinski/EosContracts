@@ -21,7 +21,9 @@ namespace pentagon{
       boost::property_tree::ptree post_json;
       boost::property_tree::ptree rcv_json;
       bool is_error_set = false;
-
+      virtual std::string get_path(){
+        return "";
+      }
     public:
       static constexpr const char* common_help =
 R"EOF(
@@ -31,6 +33,17 @@ R"EOF(
   --json ... Print received json.
   --pretty
 )EOF";      
+      eosc_command(boost::property_tree::ptree json){
+        post_json = json;
+        if(!eosc_command_json(
+          get_path(), 
+          post_json, rcv_json)){
+            is_error_set = true;
+            return;
+        } 
+      }
+
+      eos_command() : eosc_command(post_json){}
 
       bool is_error() const {
         return is_error_set;

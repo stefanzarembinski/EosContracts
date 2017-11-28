@@ -22,7 +22,7 @@ Usage: ./eosc get info [OPTIONS]
 
 Options:
 )EOF";
-
+      std::string 
       get_info(){
         if(!eosc_command_json(
           "/v1/chain/get_info", 
