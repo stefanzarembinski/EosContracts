@@ -11,6 +11,18 @@
 namespace pentagon{
 
   extern boost::posix_time::ptime strtotime(const std::string str);
+  
+  extern bool eosc_command_json(
+    std::string path, 
+    boost::property_tree::ptree &post_json, 
+    boost::property_tree::ptree &rcv_json);
+
+  extern void callEosd(
+    std::string server, 
+    std::string port, 
+    std::string path,
+    boost::property_tree::ptree &post_json,
+    boost::property_tree::ptree &rcv_json);
 
   template<typename Type> 
   Type get1(boost::property_tree::ptree json,
@@ -33,7 +45,7 @@ R"EOF(
   --json ... Print received json.
   --pretty
 )EOF";      
-      eosc_command(boost::property_tree::ptree json){
+      eosc_command(boost::property_tree::ptree& json){
         post_json = json;
         if(!eosc_command_json(
           get_path(), 
@@ -43,7 +55,7 @@ R"EOF(
         } 
       }
 
-      eos_command() : eosc_command(post_json){}
+      eosc_command() : eosc_command(post_json){}
 
       bool is_error() const {
         return is_error_set;
@@ -60,16 +72,4 @@ R"EOF(
         return get1<Type>(rcv_json, path);
     }  
   };
-
-  extern bool eosc_command_json(
-    std::string path, 
-    boost::property_tree::ptree &post_json, 
-    boost::property_tree::ptree &rcv_json);
-
-  extern void callEosd(
-    std::string server, 
-    std::string port, 
-    std::string path,
-    boost::property_tree::ptree &post_json,
-    boost::property_tree::ptree &rcv_json);
 }

@@ -3,7 +3,6 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <boost/property_tree/ptree.hpp>
 
-#include "../pent_core/pent_core.hpp"
 #include <pent_config.h>
 #include "eosc_commands.hpp"
 
@@ -22,15 +21,7 @@ Usage: ./eosc get info [OPTIONS]
 
 Options:
 )EOF";
-      std::string 
-      get_info(){
-        if(!eosc_command_json(
-          "/v1/chain/get_info", 
-          post_json, rcv_json)){
-            is_error_set = true;
-            return;
-        } 
-      }
+
   };
 
 /**

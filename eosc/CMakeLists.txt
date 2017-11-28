@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.8)
-project (pentagon)
+project (eosc)
 set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake")
 include(cotire)
 include("${PROJECT_SOURCE_DIR}/../pent_config.cmake")
@@ -25,12 +25,12 @@ find_package(Threads REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
-add_subdirectory(pent_core)
+add_subdirectory(eosc_commands)
 add_executable(${PROJECT_NAME} main.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} pent_core)
+target_link_libraries(${PROJECT_NAME} eosc_commands)
 target_link_libraries(${PROJECT_NAME} "${PROJECT_SOURCE_DIR}/build/eosc_commands/libeosc_commands.a")
 
 cotire(${PROJECT_NAME})
