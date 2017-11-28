@@ -1,5 +1,5 @@
 project (EosLib)
-include(../pent_config.cmake)
+include(../config.cmake)
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)

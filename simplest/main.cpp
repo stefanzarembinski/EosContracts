@@ -16,7 +16,7 @@
 #include <boost/log/sources/record_ostream.hpp>
 
 #include <pthread.h>
-#include <pent_config.h>
+#include <config.h>
 
 using namespace std;
 using boost::format;

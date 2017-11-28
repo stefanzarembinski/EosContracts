@@ -1,5 +1,5 @@
 project (CurrencyContract)
-include(../../pent_config.cmake)
+include(../../config.cmake)
 
 set(INSTALL_DIR "${PROJECT_SOURCE_DIR}/../../target")
 message(STATUS "INSTALL_DIR: ${INSTALL_DIR}")

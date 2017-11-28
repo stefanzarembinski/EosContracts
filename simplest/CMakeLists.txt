@@ -1,5 +1,5 @@
 project (Simplest)
-include(../pent_config.cmake) 
+include(../config.cmake) 
 
 set(CMAKE_BUILD_TYPE Debug)
 
@@ -15,4 +15,4 @@ target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 install (TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-install (FILES "${PROJECT_BINARY_DIR}/pent_config.h" DESTINATION include)
+install (FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)

@@ -8,7 +8,7 @@
 #include <pthread.h>
 
 #include "eosc_commands.hpp"
-#include <pent_config.h>
+#include <config.h>
 
 namespace pentagon{
 

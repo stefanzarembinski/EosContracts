@@ -1,18 +1,18 @@
 cmake_minimum_required (VERSION 3.8)
 project (eosc)
-set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake")
+set (CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 include(cotire)
-include("${PROJECT_SOURCE_DIR}/../pent_config.cmake")
+include("${PROJECT_SOURCE_DIR}/CMake/config.cmake")
 
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)
-set(CONFIG_JSON "\"${PROJECT_SOURCE_DIR}/../pent_config.json\"")
+set(CONFIG_JSON "\"${PROJECT_SOURCE_DIR}/config.json\"")
 set(LOGGING_DIR "\"${CMAKE_INSTALL_PREFIX}\"")
 configure_file (
-   "${PROJECT_SOURCE_DIR}/pent_config.h.in"
-   "${CMAKE_INSTALL_PREFIX}/include/pent_config.h"
+   "${PROJECT_SOURCE_DIR}/config.h.in"
+   "${CMAKE_BINARY_PREFIX}/config.h"
    )
-message(STATUS "pent_config.h: ${CMAKE_INSTALL_PREFIX}/include/pent_config.h")
+message(STATUS "config.h: ${CMAKE_INSTALL_PREFIX}/include/config.h")
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)

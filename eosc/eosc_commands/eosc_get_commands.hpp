@@ -3,7 +3,7 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
 #include <boost/property_tree/ptree.hpp>
 
-#include <pent_config.h>
+#include <config.h>
 #include "eosc_commands.hpp"
 
 namespace pentagon{ 
