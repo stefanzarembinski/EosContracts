@@ -8,7 +8,7 @@
          "name": "(gdb) Launch",
          "type": "cppdbg",
          "request": "launch",
-         "program": "${workspaceFolder}/../target/bin/pentagon",
+         "program": "${workspaceFolder}/../target/bin/eosc",
          "args": [],
          "stopAtEntry": false,
          "cwd": "${workspaceFolder}/../target/bin",

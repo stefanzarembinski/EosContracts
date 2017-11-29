@@ -6,18 +6,18 @@ include("${PROJECT_SOURCE_DIR}/CMake/config.cmake")
 
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)
-set(CONFIG_JSON "\"${PROJECT_SOURCE_DIR}/config.json\"")
+set(CONFIG_JSON "\"${PROJECT_SOURCE_DIR}/eosc_config.json\"")
 set(LOGGING_DIR "\"${CMAKE_INSTALL_PREFIX}\"")
 configure_file (
-   "${PROJECT_SOURCE_DIR}/config.h.in"
-   "${CMAKE_BINARY_PREFIX}/config.h"
+   "${PROJECT_SOURCE_DIR}/eosc_config.h.in"
+   "${CMAKE_BINARY_DIR}/eosc_config.h"
    )
-message(STATUS "config.h: ${CMAKE_INSTALL_PREFIX}/include/config.h")
+include_directories(${CMAKE_BINARY_DIR})
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
-find_package(Boost 1.64.0 REQUIRED COMPONENTS system date_time)
+find_package(Boost 1.64.0 REQUIRED COMPONENTS system date_time program_options)
 
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 set(THREADS_PREFER_PTHREAD_FLAG TRUE)

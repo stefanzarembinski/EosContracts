@@ -3,6 +3,7 @@
       "CRNL",
       "Eosd",
       "eosc",
+      "once",
       "ptree"
    ],
    "files.associations": {

@@ -3,14 +3,15 @@
 
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/algorithm/string.hpp>
 #include <boost/asio.hpp>
 
 #include <pthread.h>
 
 #include "eosc_commands.hpp"
-#include <config.h>
+#include <eosc_config.h>
 
-namespace pentagon{
+namespace tokenika::eosc{
 
   template<typename Type> Type get1(boost::property_tree::ptree json,
     const boost::property_tree::ptree::path_type & path){
@@ -22,29 +23,28 @@ namespace pentagon{
       return strtotime(json.get<std::string>(path));
   }
 
-  class init_get1{
+  struct init_get1{
     /*
     Template function has to be used, in order to force compiler
     to build specific forms needed elsewhere in the program and 
     in the library.
     */
-    public:
-      std::string strVal;
-      int intVal;
-      float floatVal;
-      boost::posix_time::ptime ptime;
+    std::string strVal;
+    int intVal;
+    float floatVal;
+    boost::posix_time::ptime ptime;
 
-      init_get1(){
-        try{
-          boost::property_tree::ptree json;
-          boost::property_tree::ptree::path_type path;
+    init_get1(){
+      try{
+        boost::property_tree::ptree json;
+        boost::property_tree::ptree::path_type path;
 
-          strVal = get1<std::string>(json, path);
-          intVal = get1<int>(json, path);
-          floatVal = get1<float>(json, path);
-          ptime = get1<boost::posix_time::ptime>(json, path);
-        } catch(...){}
-      }
+        strVal = get1<std::string>(json, path);
+        intVal = get1<int>(json, path);
+        floatVal = get1<float>(json, path);
+        ptime = get1<boost::posix_time::ptime>(json, path);
+      } catch(...){}
+    }
   };
   init_get1 init;
 
@@ -115,15 +115,17 @@ namespace pentagon{
       std::stringstream ss;
       boost::property_tree::json_parser::
         write_json(ss, post_json, false);
-
+      std::string post_msg = ss.str();
+      boost::trim(post_msg);
+      
       std::string CRNL = "\r\n";
       std::string req_string = 
         "POST " + path + " HTTP/1.0" + CRNL +
         "Host: " + server + CRNL + 
-        "content-length: " + std::to_string(ss.str().size()) + CRNL +
+        "content-length: " + std::to_string(post_msg.size()) + CRNL +
         "Accept: */*"  + CRNL +
         "Connection: close" + CRNL + CRNL +
-        ss.str();
+        post_msg;
       boost::system::error_code error;
 
       request_stream << req_string;
@@ -176,14 +178,14 @@ namespace pentagon{
     }
   }
 
-/*
- Definitions for eosc_command class.
- */
-    std::string eosc_command::to_string_post(bool pretty) const {
+/***************************************************************************
+  Definitions for class eosc_command.
+****************************************************************************/
+    std::string eosc_command::to_string_post() const {
       std::stringstream ss;
       try{
       boost::property_tree::json_parser::
-        write_json(ss, post_json, pretty);
+        write_json(ss, post_json, !is_raw);
       }catch(...){
         std::stringstream msg;
         std::exception_ptr p = std::current_exception();
@@ -193,11 +195,11 @@ namespace pentagon{
       return ss.str();
     }
 
-    std::string eosc_command::to_string_rcv(bool pretty) const {
+    std::string eosc_command::to_string_rcv() const {
       std::stringstream ss;
       try{
         boost::property_tree::json_parser::
-          write_json(ss, rcv_json, pretty);
+          write_json(ss, rcv_json, !is_raw);
       } catch(...){
         std::stringstream msg;
         std::exception_ptr p = std::current_exception();
@@ -206,7 +208,4 @@ namespace pentagon{
       }
       return ss.str();
     }
-
-
-    
 }
