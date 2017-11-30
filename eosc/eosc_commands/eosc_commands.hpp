@@ -12,7 +12,7 @@
 namespace tokenika::eosc{
 
   extern boost::posix_time::ptime strtotime(const std::string str);
-  
+
   extern bool eosc_command_json(
     std::string path, 
     boost::property_tree::ptree &post_json, 
@@ -39,66 +39,6 @@ namespace tokenika::eosc{
       boost::property_tree::ptree post_json;
 
     public:
-      // static boost::program_options::options_description 
-      //   options(int argc, const char* argv[]){
-      //   using namespace boost::program_options;
-
-      //   try{
-      //     options_description desc{"Options"};
-      //     desc.add_options()
-      //       ("help,h", "Help screen")
-      //       ("default,d", "Use default args")
-      //       ("raw", "Not pretty print")
-      //       ("post,p", "Print post json")
-      //       ("json,j", "Print received json")
-      //       ("unreg", "Unrecognized options");
-      //   } catch (const error &ex){
-      //     std::cerr << ex.what() << std::endl;
-      //   }
-      // }
-      // static void xxxx(
-      //     boost::program_options::options_desc,
-      //     boost::program_options::variables_map vm,
-      //     const char* usage)
-      //   {
-      //   using namespace std;
-// R"EOF(
-// Get current blockchain informatiojsonn
-// Usage: ./eosc get info [OPTIONS]
-
-// )EOF";
-
-// R"EOF(
-// Retrieve a full block from the blockchain
-// Usage: ./eosc get block block
-
-
-// Positionals:
-//   block TEXT                  The number or ID of the block to retrieve
-// Options:
-// )EOF";
-
-      //   if (vm.count("help")){
-      //     cout << usage << std::endl;
-      //     cout << desc << std::endl;
-      //   } else if (vm.count("default")){
-      //     get_info inst(vm);
-      //     std::cout << "arguments:" << std::endl;
-      //     cout << inst.to_string_post() << endl << endl;
-      //     cout << "result:" << endl;
-      //     cout << inst.to_string_rcv() << endl;
-      //   } else if (vm.count("post")){
-      //     get_info inst(vm);
-      //     cout << inst.to_string_post() << endl;
-      //   } else if (vm.count("json")){
-      //     get_info inst(vm);
-      //     cout << inst.to_string_rcv() << endl;
-      //   } else if (vm.count("unreg")){
-      //     std::cout << usage << std::endl;
-      //     std::cout << desc << std::endl;
-      //   }
-      // }
-
       eosc_command(
           std::string path_, 
           boost::property_tree::ptree post_json_,
@@ -131,4 +71,5 @@ namespace tokenika::eosc{
         return get1<Type>(rcv_json, path);
     }  
   };
+
 }
