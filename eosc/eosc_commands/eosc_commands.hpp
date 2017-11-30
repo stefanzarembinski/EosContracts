@@ -32,7 +32,7 @@ namespace tokenika::eosc{
   class eosc_command {
       std::string path;
       boost::property_tree::ptree rcv_json;
-      bool is_error_set;
+      bool is_error_set = false;
       bool is_raw;
 
     protected:
@@ -40,15 +40,10 @@ namespace tokenika::eosc{
 
     public:
       eosc_command(
-          std::string path_, 
-          boost::property_tree::ptree post_json_,
-          bool is_raw_ = false)
-        {
-        is_error_set = false;
-        path = path_;
-        post_json = post_json_;
-        is_raw = is_raw_;
-      }
+          std::string path, 
+          boost::property_tree::ptree post_json,
+          bool is_raw = false) 
+            : path(path), post_json(post_json), is_raw(is_raw) {}
 
       void call_eosd(){
         if(!eosc_command_json(path, post_json, rcv_json)){
