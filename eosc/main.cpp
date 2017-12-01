@@ -66,19 +66,34 @@ int main(int argc, char *argv[])
   //test1();
 
   vector<string> 
-  
-  // args = {"tokenika::eosc::command_options", "--help", "--raw"};
-  // cout << boost::algorithm::join(args, ", ") << endl;
-  // tokenika::eosc::command_options::set_options(args); 
 
-  // args = {"tokenika::eosc::command_options", "--default"};
-  // cout << boost::algorithm::join(args, ", ") << endl;
-  // tokenika::eosc::command_options::set_options(args);
+  args = {"tokenika::eosc::command_options", "--xxx"};
+  cout << boost::algorithm::join(args, ", ") << endl;
+  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);
+
+  args = {"tokenika::eosc::command_options", "--help", "--raw"};
+  cout << boost::algorithm::join(args, ", ") << endl;
+  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);
+
+  args = {"tokenika::eosc::command_options", "--example"};
+  cout << boost::algorithm::join(args, ", ") << endl;
+  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);
 
   args = {"tokenika::eosc::command_options", "--block_num", "25"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  
-  tokenika::eosc::command_options::set_options(args);  
+  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);  
+
+  args = {"tokenika::eosc::command_options", "--help", "--raw"};
+  cout << boost::algorithm::join(args, ", ") << endl;
+  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args);
+
+  args = {"tokenika::eosc::command_options", "--example"};
+  cout << boost::algorithm::join(args, ", ") << endl;
+  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args);
+
+  args = {"tokenika::eosc::command_options", "--block_num", "25"};
+  cout << boost::algorithm::join(args, ", ") << endl;
+  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args);  
 
   return 0;
 }
