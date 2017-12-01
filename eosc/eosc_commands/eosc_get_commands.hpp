@@ -111,6 +111,10 @@ Usage: ./eosc get block block [OPTIONS]
         return ok;
       }
 
+      eosc_command command(boost::property_tree::ptree& post_json, bool is_raw){
+        return get_block(post_json, is_raw);
+      }
+
       void get_example(){
         get_info get_info;
         std::cout << "get info:" << std::endl;
@@ -163,9 +167,8 @@ Usage: ./eosc get block block [OPTIONS]
           } else if(vm.count("example")){
               special.get_example();
           } else if(special.set_json(vm)){
-            //special.command(post_json, is_raw);
-            get_block get_block(post_json, is_raw);
-            std::cout << get_block.to_string_rcv() << std::endl;
+            eosc_command command = special.command(post_json, is_raw);
+            std::cout << command.to_string_rcv() << std::endl;
           } else if (vm.count("unreg")){
             std::cout << special.get_usage() << std::endl;
             std::cout << desc << std::endl;
