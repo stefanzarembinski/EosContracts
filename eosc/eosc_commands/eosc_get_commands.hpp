@@ -4,7 +4,7 @@
 #include <boost/property_tree/ptree.hpp>
 
 #include <eosc_config.h>
-#include "eosc_commands.hpp"
+#include "eosc_command.hpp"
 
 namespace tokenika::eosc
 {
@@ -67,16 +67,14 @@ namespace tokenika::eosc
     }
   };
 
-  class special_options
+  class get_block_options
   {
-    boost::program_options::options_description &desc;
     boost::property_tree::ptree &post_json;
 
     public:
-      special_options(
-        boost::program_options::options_description &desc,
+      get_block_options(
         boost::property_tree::ptree &post_json) : 
-          desc(desc), post_json(post_json){}
+          post_json(post_json){}
 
       int n;
       std::string id;
@@ -125,67 +123,66 @@ Usage: ./eosc get block block [OPTIONS]
   };
 
   //http://boost.cowic.de/rc/pdf/program_options.pdf
-  class get_block_options
+  class command_options
   {
+    boost::program_options::options_description desc{"Options"};
+    boost::property_tree::ptree post_json;
+    tokenika::eosc::get_block_options special 
+      = get_block_options(post_json);
+
+    void common_options(boost::program_options::options_description& common){
+      common.add_options()
+        ("help,h", "Help screen")
+        ("example", "Usage example") 
+        ("raw", "Not pretty print")
+        ("json", "Print received json")
+        ("unreg", "Unrecognized options");
+    }
+    
     public:
-      boost::program_options::options_description desc{"Options"};
-      boost::property_tree::ptree post_json;
-      tokenika::eosc::special_options special 
-        = special_options(desc, post_json);       
-
-      get_block_options(int argc, const char **argv)
+      command_options(int argc, const char **argv)
       {
-          try{
-            bool is_raw = false;
-            bool is_print = false;
+        try{
+          bool is_raw = false;
+          bool is_print = false;
 
-            boost::program_options::options_description common("");
-            common.add_options()
-              ("help,h", "Help screen")
-              ("example", "Using example") 
-              ("raw", "Not pretty print")
-              ("json", "Print received json")
-              ("unreg", "Unrecognized options");
+          boost::program_options::options_description common("");
+          common_options(common);
+          desc.add(special.options()).add(common);
 
-            desc.add(special.options()).add(common);
-            boost::program_options::variables_map vm;
-            store(parse_command_line(argc, argv, desc), vm);
-            notify(vm);
-          
-            is_raw = vm.count("raw");
-            is_print = vm.count("json");
+          boost::program_options::variables_map vm;
+          store(parse_command_line(argc, argv, desc), vm);
+          notify(vm);
+        
+          is_raw = vm.count("raw");
+          is_print = vm.count("json");
 
-            if (vm.count("help")){
-              std::cout << special.get_usage() << std::endl;
-              std::cout << desc << std::endl;
-            } else if(vm.count("example") || vm.count("block_num") || vm.count("block_id")){
-              if (vm.count("example")){
-                special.get_example();
-              } else if(special.set_json(vm)){
-                get_block get_block(post_json, is_raw);
-                std::cout << get_block.to_string_rcv() << std::endl;
-              } else {
-                std::cout << special.get_usage()<< std::endl;
-                std::cout << desc << std::endl;          
-              }
-            } else if (vm.count("unreg")){
-              std::cout << special.get_usage() << std::endl;
-              std::cout << desc << std::endl;
-            }
-
-          } catch (const boost::program_options::error &ex){
-            std::cerr << ex.what() << std::endl;
+          if (vm.count("help")){
+            std::cout << special.get_usage() << std::endl;
+            std::cout << desc << std::endl;
+          } else if(vm.count("example")){
+              special.get_example();
+          } else if(special.set_json(vm)){
+            //special.command(post_json, is_raw);
+            get_block get_block(post_json, is_raw);
+            std::cout << get_block.to_string_rcv() << std::endl;
+          } else if (vm.count("unreg")){
+            std::cout << special.get_usage() << std::endl;
+            std::cout << desc << std::endl;
           }
+        } catch (const boost::program_options::error &ex){
+          std::cerr << ex.what() << std::endl;
+        }
       }
 
-      static void get_block_options_(std::vector<std::string> strVector){
+      static void set_options(std::vector<std::string> strVector){
         std::vector<const char*> cStrArray;
         cStrArray.reserve(strVector.size());
         for(int index = 0; index < strVector.size(); ++index)
           {
             cStrArray.push_back(strVector[index].c_str());
           }
-        get_block_options(cStrArray.size(), &cStrArray[0]);
+        command_options(cStrArray.size(), &cStrArray[0]);
       }     
   };
 }

@@ -8,7 +8,7 @@
 
 #include <pthread.h>
 
-#include "eosc_commands.hpp"
+#include "eosc_command.hpp"
 #include <eosc_config.h>
 
 namespace tokenika::eosc{
