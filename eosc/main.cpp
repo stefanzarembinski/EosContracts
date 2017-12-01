@@ -67,9 +67,9 @@ int main(int argc, char *argv[])
 
   vector<string> 
   
-  args = {"tokenika::eosc::command_options", "--help", "--raw"};
-  cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::command_options::set_options(args); 
+  // args = {"tokenika::eosc::command_options", "--help", "--raw"};
+  // cout << boost::algorithm::join(args, ", ") << endl;
+  // tokenika::eosc::command_options::set_options(args); 
 
   // args = {"tokenika::eosc::command_options", "--default"};
   // cout << boost::algorithm::join(args, ", ") << endl;
@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
 
   args = {"tokenika::eosc::command_options", "--block_num", "25"};
   cout << boost::algorithm::join(args, ", ") << endl;
+  
   tokenika::eosc::command_options::set_options(args);  
 
   return 0;

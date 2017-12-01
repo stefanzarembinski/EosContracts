@@ -69,15 +69,11 @@ namespace tokenika::eosc
 
   class get_block_options
   {
-    boost::property_tree::ptree &post_json;
+    boost::property_tree::ptree post_json;
+    int n;
+    std::string id;
 
     public:
-      get_block_options(
-        boost::property_tree::ptree &post_json) : 
-          post_json(post_json){}
-
-      int n;
-      std::string id;
 
       const char* get_usage(){
         return R"EOF(
@@ -111,7 +107,7 @@ Usage: ./eosc get block block [OPTIONS]
         return ok;
       }
 
-      eosc_command command(boost::property_tree::ptree& post_json, bool is_raw){
+      eosc_command get_command(bool is_raw){
         return get_block(post_json, is_raw);
       }
 
@@ -130,9 +126,7 @@ Usage: ./eosc get block block [OPTIONS]
   class command_options
   {
     boost::program_options::options_description desc{"Options"};
-    boost::property_tree::ptree post_json;
-    tokenika::eosc::get_block_options special 
-      = get_block_options(post_json);
+    tokenika::eosc::get_block_options special;
 
     void common_options(boost::program_options::options_description& common){
       common.add_options()
@@ -167,7 +161,7 @@ Usage: ./eosc get block block [OPTIONS]
           } else if(vm.count("example")){
               special.get_example();
           } else if(special.set_json(vm)){
-            eosc_command command = special.command(post_json, is_raw);
+            eosc_command command = special.get_command(is_raw);
             std::cout << command.to_string_rcv() << std::endl;
           } else if (vm.count("unreg")){
             std::cout << special.get_usage() << std::endl;
