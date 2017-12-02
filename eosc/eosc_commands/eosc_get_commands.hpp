@@ -87,13 +87,13 @@ Usage: ./eosc get info [OPTIONS]    get_block(const char* post_json,bool raw = f
       }
 
       virtual void get_output(tokenika::eosc::eosc_command command){
-        std::printf("## %30s: %d",
+        std::printf("## %30s: %d\n",
           "head block", 
           command.get<int>("head_block_num"));
-        std::printf("## %30s: %s",
+        std::printf("## %30s: %s\n",
           "head block time", 
           command.get<std::string>("head_block_time").c_str());        
-        std::printf("## %30s: %d",
+        std::printf("## %30s: %d\n",
           "last irreversible block", 
           command.get<int>("last_irreversible_block_num"));
       }
@@ -215,13 +215,13 @@ Usage: ./eosc get block [OPTIONS]
       }
 
       virtual void get_output(eosc_command command){
-        std::printf("## %30s: %d",
+        std::printf("## %30s: %d\n",
           "block number", 
           command.get<int>("block_num"));
-        std::printf("## %30s: %s",
+        std::printf("## %30s: %s\n",
           "timestamp", 
           command.get<std::string>("timestamp").c_str());        
-        std::printf("## %30s: %s",
+        std::printf("## %30s: %s\n",
           "ref block prefix", 
           command.get<std::string>("refBlockPrefix").c_str());
       }
