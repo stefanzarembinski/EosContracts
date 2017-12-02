@@ -1,1 +1,137 @@
-# 
+# Tokenika alternative for the EOS *eosc* program
+## Rationale
+
+For our work with eos small contracts, we have found that the original EOS `eosc` interface program is too much restrictive. First, it is hard to be used programmatically in a C++ code. Next, it is quite heavy as it is tightly connected to the whole of the EOS code. Also, it is not ready to be used in the Windows environment, while we plan to open Windows based contract development possibility.
+
+It could be enough for us to develope a minimal C++ library, implementing the commands of the EOS `eosc`. However, it was a short step to to provide this library with an command line interface.
+
+Finally, to make our work competitive to the original, and for fun, we have added a richer command option list. We dare to hope that this little work of ours could be included to the EOS project.
+
+## Richer API
+
+```
+--help
+```
+```
+Retrieve a full block from the blockchain
+Usage: ./eosc get block [OPTIONS]
+
+Options:
+
+  -n [ --block_num ] arg  Block number
+  -i [ --block_id ] arg   Block id
+
+  -h [ --help ]           Help screen
+  -j [ --json ] arg       Json argument
+  -e [ --example ]        Usage example
+  -r [ --raw ]            Not pretty print
+  -v [ --received ]       Print received json
+```
+```
+--example
+```
+```
+Invoke 'get_info' command:
+get_info get_info;
+
+{
+    "head_block_num": "9939",
+    "last_irreversible_block_num": "9924",
+    "head_block_id": "000026d378f90b5d25dcf962fc44d637872218e5f826420a342f05a534d50bfc",
+    "head_block_time": "2017-12-01T18:57:42",
+    "head_block_producer": "initr",
+    "recent_slots": "0000000000000000000000000000000000000000000000000011111111111111",
+    "participation_rate": "0.21875000000000000"
+}
+
+
+Use reference to the last block:
+get_block get_block(
+  get_info.get<int>("last_irreversible_block_num"));
+
+{
+    "previous": "000026c35fb5d442be6d4e81a1347cce2c0184c4c2047d9e6dfc78b3bb325ac2",
+    "timestamp": "2017-12-01T17:01:09",
+    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
+    "producer": "initn",
+    "producer_changes": "",
+    "producer_signature": "1f6984d14ee40ed9806ae14aa96531d874fc3417bf3f1b66c4b1d9c9402f3f90ef07c4523eb9a639ad632c181580aeb051385d718dc59ecc54d0f0e5de012b540f",
+    "cycles": "",
+    "id": "000026c44a2e8075a5b92813869bfb67b72b79ccb3f2e40ad815603c04d2fafd",
+    "block_num": "9924",
+    "refBlockPrefix": "321436069"
+}
+```
+```
+--block_num, 25
+```
+```
+{
+    "previous": "00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448",
+    "timestamp": "2017-11-29T09:50:03",
+    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
+    "producer": "initf",
+    "producer_changes": "",
+    "producer_signature": "2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619",
+    "cycles": "",
+    "id": "000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284",
+    "block_num": "25",
+    "refBlockPrefix": "623236675"
+}
+```
+```
+--json, {"block_num_or_id":"25"}
+```
+```
+{
+    "previous": "00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448",
+    "timestamp": "2017-11-29T09:50:03",
+    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
+    "producer": "initf",
+    "producer_changes": "",
+    "producer_signature": "2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619",
+    "cycles": "",
+    "id": "000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284",
+    "block_num": "25",
+    "refBlockPrefix": "623236675"
+}
+```
+## Library
+For us, a real value is the library that runs the tokenika::eosc, as we see the original eos library as not practical for our work. We need a light-weight thing, a cross-platform (good for windows) one.
+
+Let you see a code snippet:
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <string>
+
+#include "eosc_commands/eosc_get_commands.hpp"
+
+int main(int argc, char *argv[])
+{
+  tokenika::eosc::get_info get_info; /* Call 'eosd' for 'get info'. */
+  tokenika::eosc::get_block get_block( /* Call 'eosd' for 'get block', the last one. */
+    get_info.get<int>("last_irreversible_block_num"));
+
+  std::cout << get_block.to_string_rcv() << std::endl;/* Print the response. */
+
+  return 0;
+}
+```
+Here is the print-out:
+```{
+    "previous": "000028716589219b442afe9d140bc28eff4335aecd37d519b0105fca4c8e4a3f",
+    "timestamp": "2017-12-01T19:18:27",
+    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
+    "producer": "inith",
+    "producer_changes": "",
+    "producer_signature": "1f510dec0bcd85847b7bead61f6deee7a5fb4108745e6ceaaa81804fe4700b561f7ca3f3f26f56fbfaf1e10fd3ba2999f8cbe165fd391b023334badcf894ba54dc",
+    "cycles": "",
+    "id": "00002872be99d0133ea104b42b771f3c7c2ea3736263dc9db3719728a2776976",
+    "block_num": "10354",
+    "refBlockPrefix": "3020202302"
+}
+
+```
+

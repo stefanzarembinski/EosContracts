@@ -55,6 +55,18 @@ namespace tokenika::eosc{
     return t;
   }
 
+  boost::property_tree::ptree string_to_ptree(std::string json){
+    boost::property_tree::ptree ptree;
+    try {
+      std::stringstream ss; 
+      ss << json;
+      boost::property_tree::read_json(ss, ptree);
+    } catch(...){
+      std::cerr << "argument json is missformatted." << std::endl;
+    }
+    return ptree;
+  }  
+
   bool eosc_command_json(
     std::string path, 
     boost::property_tree::ptree &post_json, 
@@ -208,4 +220,50 @@ namespace tokenika::eosc{
       }
       return ss.str();
     }
-}
+
+
+/******************************************************************************
+  Definitions for class 'command_options'
+******************************************************************************/
+
+  void command_options::go(){
+    try{
+      bool is_raw = false;
+      bool is_print = false;
+
+      boost::program_options::options_description desc{"Options"};
+      boost::program_options::options_description common("");
+      common_options(common);
+      desc.add(options()).add(common);
+
+      boost::program_options::variables_map vm;
+      store(parse_command_line(argc, argv, desc), vm);
+      notify(vm);
+    
+      bool is_arg = set_json(vm) || vm.count("json");
+      if(vm.count("json")){
+        post_json = string_to_ptree(json);
+      }
+      is_raw = vm.count("raw");
+
+      if (vm.count("help")){
+        std::cout << get_usage() << std::endl;
+        std::cout << desc << std::endl;
+      } else if(vm.count("example")){
+          get_example();
+      } else if(is_arg){
+        eosc_command command = get_command(is_raw);
+        if(vm.count("received")){
+          std::cout << command.to_string_rcv() << std::endl;
+        } else{
+          get_output(command);
+        }
+      } else if (vm.count("unreg")){
+        std::cout << get_usage() << std::endl;
+        std::cout << desc << std::endl;
+      }
+    } catch (const boost::program_options::error &ex){
+      std::cerr << ex.what() << std::endl;
+    }
+  } 
+}    

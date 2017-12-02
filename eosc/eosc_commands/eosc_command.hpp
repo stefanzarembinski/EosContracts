@@ -29,7 +29,11 @@ namespace tokenika::eosc{
   Type get1(boost::property_tree::ptree json,
     const boost::property_tree::ptree::path_type & path);
 
-  class eosc_command {
+  extern boost::property_tree::ptree string_to_ptree(
+    std::string json);
+
+  class eosc_command 
+  {
       std::string path;
       boost::property_tree::ptree rcv_json;
       bool is_error_set = false;
@@ -44,6 +48,15 @@ namespace tokenika::eosc{
           boost::property_tree::ptree post_json,
           bool is_raw = false) 
             : path(path), post_json(post_json), is_raw(is_raw) {}
+      
+      eosc_command(
+          std::string path, 
+          std::string json,
+          bool is_raw = false) 
+            : path(path), is_raw(is_raw) 
+      {
+        post_json = string_to_ptree(json);
+      }
 
       void call_eosd(){
         if(!eosc_command_json(path, post_json, rcv_json)){
@@ -70,70 +83,47 @@ namespace tokenika::eosc{
   //http://boost.cowic.de/rc/pdf/program_options.pdf
   class command_options
   {
-    boost::program_options::options_description desc{"Options"};
     int argc;
     const char **argv;
 
     protected:
       boost::property_tree::ptree post_json;
-      virtual const char* get_usage(){return "";};
+      virtual const char* get_usage(){return "";}
+
       virtual boost::program_options::options_description options(){
         boost::program_options::options_description special("");
         return special;
       }
-      virtual bool set_json(boost::program_options::variables_map &vm)
-      {
+
+      virtual bool set_json(boost::program_options::variables_map &vm){
         return false;
       }
-      virtual eosc_command get_command(bool is_raw)
-      {
+
+      virtual eosc_command get_command(bool is_raw){
         return eosc_command("", post_json);
       }
+
       virtual void get_example(){}
 
+      virtual void get_output(eosc_command command){
+        std::cout << command.to_string_rcv() << std::endl;
+      }
+
+    std::string json;
     void common_options(boost::program_options::options_description& common){
       common.add_options()
         ("help,h", "Help screen")
-        ("example", "Usage example") 
-        ("raw", "Not pretty print")
-        ("json", "Print received json");
+        ("json,j", 
+          boost::program_options::value<std::string>(&json),
+          "Json argument")
+        ("received,v", "Print received json")        
+        ("raw,r", "Not pretty print")
+        ("example,e", "Usage example");
     }
 
     public:
       command_options(int argc, const char **argv) : argc(argc), argv(argv) {}
-
-      void go(){
-        try{
-          bool is_raw = false;
-          bool is_print = false;
-
-          boost::program_options::options_description common("");
-          common_options(common);
-          desc.add(options()).add(common);
-
-          boost::program_options::variables_map vm;
-          store(parse_command_line(argc, argv, desc), vm);
-          notify(vm);
-        
-          is_raw = vm.count("raw");
-          is_print = vm.count("json");
-
-          if (vm.count("help")){
-            std::cout << get_usage() << std::endl;
-            std::cout << desc << std::endl;
-          } else if(vm.count("example")){
-              get_example();
-          } else if(set_json(vm)){
-            eosc_command command = get_command(is_raw);
-            std::cout << command.to_string_rcv() << std::endl;
-          } else if (vm.count("unreg")){
-            std::cout << get_usage() << std::endl;
-            std::cout << desc << std::endl;
-          }
-        } catch (const boost::program_options::error &ex){
-          std::cerr << ex.what() << std::endl;
-        }
-      }     
+      void go();
   };
 
   template<class T> static void set_options(std::vector<std::string> strVector){
@@ -145,5 +135,4 @@ namespace tokenika::eosc{
       }
     T(cStrArray.size(), &cStrArray[0]).go();
   }
-
 }

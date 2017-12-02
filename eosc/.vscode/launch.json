@@ -9,7 +9,7 @@
          "type": "cppdbg",
          "request": "launch",
          "program": "${workspaceFolder}/../target/bin/eosc",
-         "args": [],
+         "args": ["get","info"],
          "stopAtEntry": false,
          "cwd": "${workspaceFolder}/../target/bin",
          "environment": [],

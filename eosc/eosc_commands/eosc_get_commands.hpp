@@ -12,33 +12,50 @@ namespace tokenika::eosc
   /**
    * @brief Get current blockchain information.
    * 
+   * #include <stdio.h>
+   * #include <stdlib.h>
+   * #include <iostream>
+   * #include <string>
+   * #include "eosc_commands/eosc_get_commands.hpp"
+   * 
+   * int main(int argc, char *argv[])
+   * {
+   * tokenika::eosc::get_info get_info; // Call 'eosd' for 'get info'.
+   * std::cout << get_info.to_string_rcv() << std::endl; // Print the response.
+   * return 0;
+   * }
+   * 
    */
   class get_info : public eosc_command
   {
   public:
+    get_info(const char* post_json, bool raw = false) 
+      : eosc_command(
+          "/v1/chain/get_info",
+          post_json,
+          raw)
+    {
+      call_eosd();      
+    }
+    
     get_info(
       boost::property_tree::ptree post_json, 
-      bool raw = false) : eosc_command(
-                                      "/v1/chain/get_block",
-                                      post_json,
-                                      raw)
+      bool raw = false) 
+      : eosc_command(
+          "/v1/chain/get_info",
+          post_json,
+          raw)
     {
       call_eosd();
     }
 
     get_info() : eosc_command(
-                    "/v1/chain/get_info",
-                    boost::property_tree::ptree())
+              "/v1/chain/get_info",
+              boost::property_tree::ptree())
     {
       call_eosd();
     }
   };
-
-  // R"EOF(
-  // Get current blockchain information
-  // Usage: ./eosc get info [OPTIONS]
-
-  // )EOF";
 
   class get_info_options : public command_options
   {
@@ -50,7 +67,14 @@ namespace tokenika::eosc
       const char* get_usage(){
         return R"EOF(
 Get current blockchain information
-Usage: ./eosc get info [OPTIONS]
+Usage: ./eosc get info [OPTIONS]    get_block(const char* post_json,bool raw = false) 
+      : eosc_command(
+          "/v1/chain/get_block",
+          post_json,
+          raw)
+    {
+      call_eosd();      
+    }
 
 )EOF";}
 
@@ -60,6 +84,18 @@ Usage: ./eosc get info [OPTIONS]
 
       virtual eosc_command get_command(bool is_raw){
         return get_info(post_json, is_raw);
+      }
+
+      virtual void get_output(tokenika::eosc::eosc_command command){
+        std::printf("## %30s: %d",
+          "head block", 
+          command.get<int>("head_block_num"));
+        std::printf("## %30s: %s",
+          "head block time", 
+          command.get<std::string>("head_block_time").c_str());        
+        std::printf("## %30s: %d",
+          "last irreversible block", 
+          command.get<int>("last_irreversible_block_num"));
       }
 
       virtual void get_example(){
@@ -75,17 +111,41 @@ get_info get_info;
   /**
    * @brief Retrieve a full block from the blockchain.
    * 
+   * 
+   * #include <stdio.h>
+   * #include <stdlib.h>
+   * #include <iostream>
+   * #include <string>
+   * #include "eosc_commands/eosc_get_commands.hpp"
+   * 
+   * int main(int argc, char *argv[])
+   * {
+   * tokenika::eosc::get_info get_info; // Call 'eosd' for 'get info'.
+   * tokenika::eosc::get_block get_block( // Call 'eosd' for 'get block', the last one.
+   * get_info.get<int>("last_irreversible_block_num"));
+   * std::cout << get_block.to_string_rcv() << std::endl; // Print the response.
+   * return 0;
+   * }
+   * 
    */
   class get_block : public eosc_command
   {
   public:
 
-    get_block(
-      boost::property_tree::ptree post_json, 
-      bool raw = false) : eosc_command(
-                                      "/v1/chain/get_block",
-                                      post_json,
-                                      raw)
+    get_block(const char* post_json,bool raw = false) 
+      : eosc_command(
+          "/v1/chain/get_block",
+          post_json,
+          raw)
+    {
+      call_eosd();      
+    }
+
+    get_block(boost::property_tree::ptree post_json, bool raw = false) 
+        : eosc_command(
+          "/v1/chain/get_block",
+          post_json,
+          raw)
     {
       call_eosd();
     }
@@ -119,7 +179,7 @@ get_info get_info;
       const char* get_usage(){
         return R"EOF(
 Retrieve a full block from the blockchain
-Usage: ./eosc get block block [OPTIONS]
+Usage: ./eosc get block [OPTIONS]
 
 )EOF";}
 
@@ -154,6 +214,18 @@ Usage: ./eosc get block block [OPTIONS]
         return get_block(post_json, is_raw);
       }
 
+      virtual void get_output(eosc_command command){
+        std::printf("## %30s: %d",
+          "block number", 
+          command.get<int>("block_num"));
+        std::printf("## %30s: %s",
+          "timestamp", 
+          command.get<std::string>("timestamp").c_str());        
+        std::printf("## %30s: %s",
+          "ref block prefix", 
+          command.get<std::string>("refBlockPrefix").c_str());
+      }
+
       virtual void get_example(){
         get_info get_info;
         std::cout << R"EOF(
@@ -165,7 +237,7 @@ get_info get_info;
         get_block get_block(
           get_info.get<int>("last_irreversible_block_num"));
         std::cout << R"EOF(
-Use reference to the recentmost block:
+Use reference to the last block:
 get_block get_block(
   get_info.get<int>("last_irreversible_block_num"));
 )EOF" << std::endl;
