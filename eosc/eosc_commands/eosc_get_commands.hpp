@@ -67,15 +67,8 @@ namespace tokenika::eosc
       const char* get_usage(){
         return R"EOF(
 Get current blockchain information
-Usage: ./eosc get info [OPTIONS]    get_block(const char* post_json,bool raw = false) 
-      : eosc_command(
-          "/v1/chain/get_block",
-          post_json,
-          raw)
-    {
-      call_eosd();      
-    }
-
+Usage: ./eosc get info [Options]
+Usage: ./eosc get info [-j {}] [OPTIONS]
 )EOF";}
 
       virtual bool set_json(boost::program_options::variables_map &vm){
@@ -87,15 +80,9 @@ Usage: ./eosc get info [OPTIONS]    get_block(const char* post_json,bool raw = f
       }
 
       virtual void get_output(tokenika::eosc::eosc_command command){
-        std::printf("## %30s: %d\n",
-          "head block", 
-          command.get<int>("head_block_num"));
-        std::printf("## %30s: %s\n",
-          "head block time", 
-          command.get<std::string>("head_block_time").c_str());        
-        std::printf("## %30s: %d\n",
-          "last irreversible block", 
-          command.get<int>("last_irreversible_block_num"));
+        output("head block", "%d", command.get<int>("head_block_num"));
+        output("head block time", "%s", command.get<int>("head_block_time"));
+        output("last irreversible block", "%d", command.get<int>("last_irreversible_block_num"));
       }
 
       virtual void get_example(){
@@ -179,8 +166,8 @@ get_info get_info;
       const char* get_usage(){
         return R"EOF(
 Retrieve a full block from the blockchain
-Usage: ./eosc get block [OPTIONS]
-
+Usage: ./eosc get block [block_num] [Options]
+Usage: ./eosc get block [-j {"block_num_or_id":*}] [OPTIONS]
 )EOF";}
 
       int n;
@@ -196,6 +183,12 @@ Usage: ./eosc get block [OPTIONS]
             boost::program_options::value<std::string>(&id), 
             "Block id");
         return special;
+      }
+
+      virtual void
+        set_pos_desc(boost::program_options::positional_options_description& 
+        pos_desc){
+        pos_desc.add("block_num", 1);
       }
 
       virtual bool set_json(boost::program_options::variables_map &vm){
@@ -215,15 +208,9 @@ Usage: ./eosc get block [OPTIONS]
       }
 
       virtual void get_output(eosc_command command){
-        std::printf("## %30s: %d\n",
-          "block number", 
-          command.get<int>("block_num"));
-        std::printf("## %30s: %s\n",
-          "timestamp", 
-          command.get<std::string>("timestamp").c_str());        
-        std::printf("## %30s: %s\n",
-          "ref block prefix", 
-          command.get<std::string>("refBlockPrefix").c_str());
+        output("block number", "%d", command.get<int>("block_num"));
+        output("timestamp", "%s", command.get<std::string>("timestamp").c_str());
+        output("ref block prefix", "%s",command.get<std::string>("refBlockPrefix").c_str());
       }
 
       virtual void get_example(){

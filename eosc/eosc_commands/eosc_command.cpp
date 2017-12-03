@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <cstdarg>
 
 #include "boost/property_tree/json_parser.hpp"
 #include "boost/date_time/posix_time/posix_time.hpp"
@@ -12,6 +13,18 @@
 #include <eosc_config.h>
 
 namespace tokenika::eosc{
+
+  void output(const char* label, const char* format, ...){
+    std::printf("## %20s: ", label);
+
+    std::string f(format);
+    f += "\n";
+
+    va_list argptr;    
+    va_start(argptr, format);
+    std::vprintf(f.c_str(), argptr);
+    va_end(argptr);
+  }
 
   template<typename Type> Type get1(boost::property_tree::ptree json,
     const boost::property_tree::ptree::path_type & path){
@@ -236,8 +249,15 @@ namespace tokenika::eosc{
       common_options(common);
       desc.add(options()).add(common);
 
+      boost::program_options::positional_options_description pos_desc;
+      set_pos_desc(pos_desc);
+
+      boost::program_options::command_line_parser parser{argc, argv};
+      parser.options(desc).positional(pos_desc).allow_unregistered();
+      boost::program_options::parsed_options parsed_options = parser.run();
+
       boost::program_options::variables_map vm;
-      store(parse_command_line(argc, argv, desc), vm);
+      store(parsed_options, vm);
       notify(vm);
     
       bool is_arg = set_json(vm) || vm.count("json");

@@ -13,6 +13,8 @@ namespace tokenika::eosc{
 
   extern boost::posix_time::ptime strtotime(const std::string str);
 
+  extern void output(const char* label, const char* format, ...);
+
   extern bool eosc_command_json(
     std::string path, 
     boost::property_tree::ptree &post_json, 
@@ -94,6 +96,10 @@ namespace tokenika::eosc{
         boost::program_options::options_description special("");
         return special;
       }
+
+      virtual void
+        set_pos_desc(boost::program_options::positional_options_description& 
+          pos_descr){}
 
       virtual bool set_json(boost::program_options::variables_map &vm){
         return false;
