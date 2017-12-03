@@ -68,7 +68,7 @@ namespace tokenika::eosc
         return R"EOF(
 Get current blockchain information
 Usage: ./eosc get info [Options]
-Usage: ./eosc get info [-j {}] [OPTIONS]
+Usage: ./eosc get info [-j '{}'] [OPTIONS]
 )EOF";}
 
       virtual bool set_json(boost::program_options::variables_map &vm){
@@ -167,7 +167,7 @@ get_info get_info;
         return R"EOF(
 Retrieve a full block from the blockchain
 Usage: ./eosc get block [block_num] [Options]
-Usage: ./eosc get block [-j {"block_num_or_id":*}] [OPTIONS]
+Usage: ./eosc get block [-j '{"block_num_or_id":"*"}'] [OPTIONS]
 )EOF";}
 
       int n;

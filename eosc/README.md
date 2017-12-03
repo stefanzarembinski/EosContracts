@@ -7,14 +7,49 @@ It could be enough for us to develope a minimal C++ library, implementing the co
 
 Finally, to make our work competitive to the original, and for fun, we have added a richer command option list. We dare to hope that this little work of ours could be included to the EOS project.
 
+We already know how to use this richness: it is much ease to make a tool as tokenika [`eoscBash`](#) that wraps the EOS `eosc` for bookkeeping.
+
 ## Richer API
 
+### EOS
 ```
---help
+./eosc get block -h
+```
+```
+ERROR: RequiredError: block
+Retrieve a full block from the blockchain
+Usage: ./eosc get block block
+
+Positionals:
+  block TEXT                  The number or ID of the block to retrieve
+```
+```
+./eosc get block 25
+```
+```
+{
+  "previous": "00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448",
+  "timestamp": "2017-11-29T09:50:03",
+  "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
+  "producer": "initf",
+  "producer_changes": [],
+  "producer_signature": "2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619",
+  "cycles": [],
+  "id": "000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284",
+  "block_num": 25,
+  "refBlockPrefix": 623236675
+}
+```
+
+### Tokenika
+
+```
+./eosc get block -h
 ```
 ```
 Retrieve a full block from the blockchain
-Usage: ./eosc get block [OPTIONS]
+Usage: ./eosc get block [block_num] [Options]
+Usage: ./eosc get block [-j {"block_num_or_id":*}] [OPTIONS]
 
 Options:
 
@@ -23,12 +58,47 @@ Options:
 
   -h [ --help ]           Help screen
   -j [ --json ] arg       Json argument
-  -e [ --example ]        Usage example
-  -r [ --raw ]            Not pretty print
   -v [ --received ]       Print received json
+  -r [ --raw ]            Not pretty print
+  -e [ --example ]        Usage example
 ```
 ```
---example
+./eosc get block 25
+##         block number: 25
+##            timestamp: 2017-11-29T09:50:03
+##     ref block prefix: 623236675
+```
+```
+./eosc get block 25 -v
+```
+```
+{
+    "previous": "00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448",
+    "timestamp": "2017-11-29T09:50:03",
+    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
+    "producer": "initf",
+    "producer_changes": "",
+    "producer_signature": "2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619",
+    "cycles": "",
+    "id": "000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284",
+    "block_num": "25",
+    "refBlockPrefix": "623236675"
+}
+```
+```
+./eosc get block 25 -v -r
+```
+```
+{"previous":"00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448","timestamp":"2017-11-29T09:50:03","transaction_merkle_root":"0000000000000000000000000000000000000000000000000000000000000000","producer":"initf","producer_changes":"","producer_signature":"2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619","cycles":"","id":"000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284","block_num":"25","refBlockPrefix":"623236675"}
+```
+```
+./eosc get block -j '{"block_num_or_id":"56"}'
+##         block number: 56
+##            timestamp: 2017-11-29T10:02:18
+##     ref block prefix: 273573026
+```
+```
+./eosc get block --example
 ```
 ```
 Invoke 'get_info' command:
@@ -60,40 +130,6 @@ get_block get_block(
     "id": "000026c44a2e8075a5b92813869bfb67b72b79ccb3f2e40ad815603c04d2fafd",
     "block_num": "9924",
     "refBlockPrefix": "321436069"
-}
-```
-```
---block_num, 25
-```
-```
-{
-    "previous": "00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448",
-    "timestamp": "2017-11-29T09:50:03",
-    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
-    "producer": "initf",
-    "producer_changes": "",
-    "producer_signature": "2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619",
-    "cycles": "",
-    "id": "000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284",
-    "block_num": "25",
-    "refBlockPrefix": "623236675"
-}
-```
-```
---json, {"block_num_or_id":"25"}
-```
-```
-{
-    "previous": "00000018b5e0ffcd3dfede45bc261e3a04de9f1f40386a69821780e063a41448",
-    "timestamp": "2017-11-29T09:50:03",
-    "transaction_merkle_root": "0000000000000000000000000000000000000000000000000000000000000000",
-    "producer": "initf",
-    "producer_changes": "",
-    "producer_signature": "2005db1a193cc3597fdc3bd38a4375df2a9f9593390f9431f7a9b53701cd46a1b5418b9cd68edbdf2127d6ececc4d66b7a190e72a97ce9adfcc750ef0a770f5619",
-    "cycles": "",
-    "id": "000000190857c9fb43d62525bd29dc321003789c075de593ce7224bde7fc2284",
-    "block_num": "25",
-    "refBlockPrefix": "623236675"
 }
 ```
 ## Library
