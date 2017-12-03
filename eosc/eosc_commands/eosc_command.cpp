@@ -253,7 +253,7 @@ namespace tokenika::eosc{
       set_pos_desc(pos_desc);
 
       boost::program_options::command_line_parser parser{argc, argv};
-      parser.options(desc).positional(pos_desc).allow_unregistered();
+      parser.options(desc).positional(pos_desc);//.allow_unregistered();
       boost::program_options::parsed_options parsed_options = parser.run();
 
       boost::program_options::variables_map vm;
