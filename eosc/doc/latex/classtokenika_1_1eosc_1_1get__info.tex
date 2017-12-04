@@ -1,0 +1,41 @@
+\hypertarget{classtokenika_1_1eosc_1_1get__info}{}\section{tokenika\+:\+:eosc\+:\+:get\+\_\+info Class Reference}
+\label{classtokenika_1_1eosc_1_1get__info}\index{tokenika\+::eosc\+::get\+\_\+info@{tokenika\+::eosc\+::get\+\_\+info}}
+
+
+Get current blockchain information.  
+
+
+
+
+{\ttfamily \#include $<$eosc\+\_\+get\+\_\+commands.\+hpp$>$}
+
+
+
+Inheritance diagram for tokenika\+:\+:eosc\+:\+:get\+\_\+info\+:
+% FIG 0
+
+
+Collaboration diagram for tokenika\+:\+:eosc\+:\+:get\+\_\+info\+:
+% FIG 1
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1get__info_a599f4636f791bdba2a6a34ead1b33823}\label{classtokenika_1_1eosc_1_1get__info_a599f4636f791bdba2a6a34ead1b33823}} 
+{\bfseries get\+\_\+info} (const char $\ast$post\+\_\+json, bool raw=false)
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1get__info_a914fda993ac1eb04e30bddac398d9253}\label{classtokenika_1_1eosc_1_1get__info_a914fda993ac1eb04e30bddac398d9253}} 
+{\bfseries get\+\_\+info} (boost\+::property\+\_\+tree\+::ptree post\+\_\+json, bool raw=false)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Get current blockchain information. 
+
+\#include $<$stdio.\+h$>$ \#include $<$stdlib.\+h$>$ \#include $<$iostream$>$ \#include $<$string$>$ \#include \char`\"{}eosc\+\_\+commands/eosc\+\_\+get\+\_\+commands.\+hpp\char`\"{}
+
+int main(int argc, char $\ast$argv\mbox{[}$\,$\mbox{]}) \{ \hyperlink{classtokenika_1_1eosc_1_1get__info}{tokenika\+::eosc\+::get\+\_\+info} \hyperlink{classtokenika_1_1eosc_1_1get__info}{get\+\_\+info}; // Call \textquotesingle{}eosd\textquotesingle{} for \textquotesingle{}get info\textquotesingle{}. std\+::cout $<$$<$ get\+\_\+info.\+to\+\_\+string\+\_\+rcv() $<$$<$ std\+::endl; // Print the response. return 0; \} 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+eosc\+\_\+commands/eosc\+\_\+get\+\_\+commands.\+hpp\end{DoxyCompactItemize}

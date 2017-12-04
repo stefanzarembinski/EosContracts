@@ -1,0 +1,57 @@
+\hypertarget{classtokenika_1_1eosc_1_1command__options}{}\section{tokenika\+:\+:eosc\+:\+:command\+\_\+options Class Reference}
+\label{classtokenika_1_1eosc_1_1command__options}\index{tokenika\+::eosc\+::command\+\_\+options@{tokenika\+::eosc\+::command\+\_\+options}}
+
+
+Inheritance diagram for tokenika\+:\+:eosc\+:\+:command\+\_\+options\+:
+% FIG 0
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_abd160bb97730ea50337411226eb26458}\label{classtokenika_1_1eosc_1_1command__options_abd160bb97730ea50337411226eb26458}} 
+{\bfseries command\+\_\+options} (int argc, const char $\ast$$\ast$argv)
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_a2e97baf2f4e568001e29554f0801f08d}\label{classtokenika_1_1eosc_1_1command__options_a2e97baf2f4e568001e29554f0801f08d}} 
+void {\bfseries go} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_a137fee5a5a11988f6012a1e69f78c724}\label{classtokenika_1_1eosc_1_1command__options_a137fee5a5a11988f6012a1e69f78c724}} 
+virtual const char $\ast$ {\bfseries get\+\_\+usage} ()
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_ad08c9f2aeec0eda334b3292dfa8326ab}\label{classtokenika_1_1eosc_1_1command__options_ad08c9f2aeec0eda334b3292dfa8326ab}} 
+virtual boost\+::program\+\_\+options\+::options\+\_\+description {\bfseries options} ()
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_a6f3fd039e834f65c0efa298d1236f413}\label{classtokenika_1_1eosc_1_1command__options_a6f3fd039e834f65c0efa298d1236f413}} 
+virtual void {\bfseries set\+\_\+pos\+\_\+desc} (boost\+::program\+\_\+options\+::positional\+\_\+options\+\_\+description \&pos\+\_\+descr)
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_a278c207184162edaa5f6b4541ccda311}\label{classtokenika_1_1eosc_1_1command__options_a278c207184162edaa5f6b4541ccda311}} 
+virtual bool {\bfseries set\+\_\+json} (boost\+::program\+\_\+options\+::variables\+\_\+map \&vm)
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_ae0c18b9321b744e110610f55b73dec36}\label{classtokenika_1_1eosc_1_1command__options_ae0c18b9321b744e110610f55b73dec36}} 
+virtual \hyperlink{classtokenika_1_1eosc_1_1eosc__command}{eosc\+\_\+command} {\bfseries get\+\_\+command} (bool is\+\_\+raw)
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_aa63988e07a5aa38fc64227f36e075a6b}\label{classtokenika_1_1eosc_1_1command__options_aa63988e07a5aa38fc64227f36e075a6b}} 
+virtual void {\bfseries get\+\_\+example} ()
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_aa2a11e844b078c1c86e553ea786722e7}\label{classtokenika_1_1eosc_1_1command__options_aa2a11e844b078c1c86e553ea786722e7}} 
+virtual void {\bfseries get\+\_\+output} (\hyperlink{classtokenika_1_1eosc_1_1eosc__command}{eosc\+\_\+command} command)
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_a69f4b6ce20347cacb57a381e99d062f7}\label{classtokenika_1_1eosc_1_1command__options_a69f4b6ce20347cacb57a381e99d062f7}} 
+void {\bfseries common\+\_\+options} (boost\+::program\+\_\+options\+::options\+\_\+description \&common)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_ad8625f455427f2562413b19055ef4172}\label{classtokenika_1_1eosc_1_1command__options_ad8625f455427f2562413b19055ef4172}} 
+boost\+::property\+\_\+tree\+::ptree {\bfseries post\+\_\+json}
+\item 
+\mbox{\Hypertarget{classtokenika_1_1eosc_1_1command__options_a2e0cdf13c9f2f32af798df0853ffdcf7}\label{classtokenika_1_1eosc_1_1command__options_a2e0cdf13c9f2f32af798df0853ffdcf7}} 
+std\+::string {\bfseries json}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+eosc\+\_\+commands/eosc\+\_\+command.\+hpp\item 
+eosc\+\_\+commands/eosc\+\_\+command.\+cpp\end{DoxyCompactItemize}
