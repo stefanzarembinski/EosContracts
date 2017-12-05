@@ -26,14 +26,14 @@ namespace tokenika::eosc{
     va_end(argptr);
   }
 
-  template<typename Type> Type get1(boost::property_tree::ptree json,
+  template<typename Type> Type getJsonPath(boost::property_tree::ptree json,
     const boost::property_tree::ptree::path_type & path){
     return json.get<Type>(path);
   }
 
-  template<> boost::posix_time::ptime get1(boost::property_tree::ptree json,
+  template<> boost::posix_time::ptime getJsonPath(boost::property_tree::ptree json,
       const boost::property_tree::ptree::path_type & path){
-      return strtotime(json.get<std::string>(path));
+      return strToTime(json.get<std::string>(path));
   }
 
   struct init_get1{
@@ -52,23 +52,23 @@ namespace tokenika::eosc{
         boost::property_tree::ptree json;
         boost::property_tree::ptree::path_type path;
 
-        strVal = get1<std::string>(json, path);
-        intVal = get1<int>(json, path);
-        floatVal = get1<float>(json, path);
-        ptime = get1<boost::posix_time::ptime>(json, path);
+        strVal = getJsonPath<std::string>(json, path);
+        intVal = getJsonPath<int>(json, path);
+        floatVal = getJsonPath<float>(json, path);
+        ptime = getJsonPath<boost::posix_time::ptime>(json, path);
       } catch(...){}
     }
   };
   init_get1 init;
 
-  boost::posix_time::ptime strtotime(const std::string str){
+  boost::posix_time::ptime strToTime(const std::string str){
     std::string temp = boost::replace_all_copy(str, "-", "");
     temp = boost::replace_all_copy(temp, ":", "");
     boost::posix_time::ptime t((boost::posix_time::from_iso_string)(temp));
     return t;
   }
 
-  boost::property_tree::ptree string_to_ptree(std::string json){
+  boost::property_tree::ptree stringToPtree(std::string json){
     boost::property_tree::ptree ptree;
     try {
       std::stringstream ss; 
@@ -80,9 +80,9 @@ namespace tokenika::eosc{
     return ptree;
   }  
 
-  bool eosc_command_json(
+  bool eoscCommandJson(
     std::string path, 
-    boost::property_tree::ptree &post_json, 
+    boost::property_tree::ptree &postJson, 
     boost::property_tree::ptree &rcv_json)
     {
         
@@ -93,7 +93,7 @@ namespace tokenika::eosc{
         config.get("eosc.server", "localhost"), 
         config.get("eosc.port", "8888"), 
         path, 
-        post_json, 
+        postJson, 
         rcv_json);
     try{
         rcv_json.get<std::string>(ERROR);
@@ -107,7 +107,7 @@ namespace tokenika::eosc{
     std::string server, 
     std::string port, 
     std::string path,
-    boost::property_tree::ptree &post_json,
+    boost::property_tree::ptree &postJson,
     boost::property_tree::ptree &rcv_json)
     {
 
@@ -139,7 +139,7 @@ namespace tokenika::eosc{
 
       std::stringstream ss;
       boost::property_tree::json_parser::
-        write_json(ss, post_json, false);
+        write_json(ss, postJson, false);
       std::string post_msg = ss.str();
       boost::trim(post_msg);
       
@@ -204,13 +204,13 @@ namespace tokenika::eosc{
   }
 
 /***************************************************************************
-  Definitions for class eosc_command.
+  Definitions for class EoscCommand.
 ****************************************************************************/
-    std::string eosc_command::to_string_post() const {
+    std::string EoscCommand::toStringPost() const {
       std::stringstream ss;
       try{
       boost::property_tree::json_parser::
-        write_json(ss, post_json, !is_raw);
+        write_json(ss, postJson, !isRaw);
       }catch(...){
         std::stringstream msg;
         std::exception_ptr p = std::current_exception();
@@ -220,11 +220,11 @@ namespace tokenika::eosc{
       return ss.str();
     }
 
-    std::string eosc_command::to_string_rcv() const {
+    std::string EoscCommand::toStringRcv() const {
       std::stringstream ss;
       try{
         boost::property_tree::json_parser::
-          write_json(ss, rcv_json, !is_raw);
+          write_json(ss, jsonRcv, !isRaw);
       } catch(...){
         std::stringstream msg;
         std::exception_ptr p = std::current_exception();
@@ -239,10 +239,9 @@ namespace tokenika::eosc{
   Definitions for class 'command_options'
 ******************************************************************************/
 
-  void command_options::go(){
+  void CommandOptions::go(){
     try{
-      bool is_raw = false;
-      bool is_print = false;
+      bool isRaw = false;
 
       boost::program_options::options_description desc{"Options"};
       boost::program_options::options_description common("");
@@ -262,9 +261,9 @@ namespace tokenika::eosc{
     
       bool is_arg = set_json(vm) || vm.count("json");
       if(vm.count("json")){
-        post_json = string_to_ptree(json);
+        postJson = stringToPtree(json);
       }
-      is_raw = vm.count("raw");
+      isRaw = vm.count("raw");
 
       if (vm.count("help")){
         std::cout << get_usage() << std::endl;
@@ -272,9 +271,9 @@ namespace tokenika::eosc{
       } else if(vm.count("example")){
           get_example();
       } else if(is_arg){
-        eosc_command command = get_command(is_raw);
+        EoscCommand command = get_command(isRaw);
         if(vm.count("received")){
-          std::cout << command.to_string_rcv() << std::endl;
+          std::cout << command.toStringRcv() << std::endl;
         } else{
           get_output(command);
         }

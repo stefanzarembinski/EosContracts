@@ -1,3 +1,15 @@
+/**
+ * @file eosc_command.hpp
+ * @copyright defined in resources/LICENSE.txt
+ * @defgroup eosc Tokenika-EOS Command Line Client Reference
+ * @brief Tool for sending transactions and querying state from EOS blockchain
+ * @ingroup eosc
+ * 
+ * @brief Base definitions.
+ * 
+ * Defines base classes of the project, and helper methods.
+ */
+
 #pragma once
 
 #include <stdlib.h>
@@ -11,85 +23,170 @@
 
 namespace tokenika::eosc{
 
-  extern boost::posix_time::ptime strtotime(const std::string str);
+  /**
+   * @brief Converts EOS time string to 'boost::posix_time'.
+   * 
+   * EOS time is a string, for example `2017-07-18T20:16:36`. For processing, 
+   * it is converted to the boost `ptime`.
+   * 
+   * @param str EOS time string.
+   * @return boost::posix_time::ptime 
+   */
+  extern boost::posix_time::ptime strToTime(const std::string str);
 
+  /**
+   * @brief Printout formater.
+   * 
+   * For example, `output("timestamp", "%s", "2017-07-18T20:16:36")` produces
+   * `##           timestamp: 2017-07-18T20:16:36`
+   * 
+   * @param label 
+   * @param format 
+   * @param ... 
+   */
   extern void output(const char* label, const char* format, ...);
 
-  extern bool eosc_command_json(
+  /**
+   * @brief Given a json, gets EOS blockchain responce.
+   * 
+   * Given a json and a command path, for example `/v1/chain/GetInfo`, 
+   * gets EOS blockchain responce.
+   * 
+   * @param path command path
+   * @param postJson json posted
+   * @param jsonRcv json received
+   * @return true if EOS blockchain responce is normal
+   * @return false if EOS blockchain responce is not normal
+   */
+  extern bool eoscCommandJson(
     std::string path, 
-    boost::property_tree::ptree &post_json, 
-    boost::property_tree::ptree &rcv_json);
+    boost::property_tree::ptree &postJson, 
+    boost::property_tree::ptree &jsonRcv);
 
+  /**
+   * @brief Given a json, gets EOS blockchain responce.
+   * 
+   * Given a json tree and a command path (for example `/v1/chain/GetInfo`),
+   * and EOS blockchain communication port (for example `8888`), 
+   * and EOS blockchain server name (for example `localhost`),
+   * gets EOS blockchain responce.
+   * 
+   * @param server EOS blockchain server name
+   * @param port EOS blockchain communication port
+   * @param path command path
+   * @param postJson json to be posted
+   * @param jsonRcv json to be filled with received data
+   */
   extern void callEosd(
     std::string server, 
     std::string port, 
     std::string path,
-    boost::property_tree::ptree &post_json,
-    boost::property_tree::ptree &rcv_json);
+    boost::property_tree::ptree &postJson,
+    boost::property_tree::ptree &jsonRcv);
     
+  /**
+   * @brief Given a json tree, returns the <Type>value of a given path.
+   * 
+   * @tparam Type type of the called value
+   * @param json json tree
+   * @param path path of the given tree
+   * @return Type 
+   */
   template<typename Type> 
-  Type get1(boost::property_tree::ptree json,
+  Type getJsonPath(boost::property_tree::ptree json,
     const boost::property_tree::ptree::path_type & path);
-
-  extern boost::property_tree::ptree string_to_ptree(
+  
+  /**
+   * @brief Given a text json tree, returns the equivalent `boost ptree`. 
+   * 
+   * @param json 
+   * @return boost::property_tree::ptree 
+   */
+  extern boost::property_tree::ptree stringToPtree(
     std::string json);
-
-  class eosc_command 
+  
+  /**
+   * @brief Basic connection to the blockchain
+   * 
+   * Given a command path (for example `/v1/chain/GetBlock`), and a json tree
+   * (for example {"block_num_or_id"="25"}), 
+   * connects to the blockchain and receive a json reflacting an aspect of the
+   * blockchain state.
+   * 
+   * `EoscCommand` is the superclass for any specific command class in this 
+   * library.
+   * 
+   * Parameters of the connection used are specified in file `eosc_config.json`
+   * in the root directory of the project.
+   * 
+   */
+  class EoscCommand 
   {
       std::string path;
-      boost::property_tree::ptree rcv_json;
-      bool is_error_set = false;
-      bool is_raw;
+      boost::property_tree::ptree jsonRcv;
+      bool isErrorSet = false;
+      bool isRaw;
 
     protected:
-      boost::property_tree::ptree post_json;
+      boost::property_tree::ptree postJson;
 
     public:
-      eosc_command(
+      /**
+       * @brief Just initiates members and calls the blockchain
+       * 
+       * @param path command path, for example `/v1/chain/GetBlock`
+       * @param postJson json tree, for example {"block_num_or_id"="25"}
+       * @param isRaw boolean, determines printout of the to-string methods
+       */
+      EoscCommand(
           std::string path, 
-          boost::property_tree::ptree post_json,
-          bool is_raw = false) 
-            : path(path), post_json(post_json), is_raw(is_raw) {}
-      
-      eosc_command(
-          std::string path, 
-          std::string json,
-          bool is_raw = false) 
-            : path(path), is_raw(is_raw) 
+          boost::property_tree::ptree postJson,
+          bool isRaw = false) 
+            : path(path), postJson(postJson), isRaw(isRaw) 
       {
-        post_json = string_to_ptree(json);
-      }
-
-      void call_eosd(){
-        if(!eosc_command_json(path, post_json, rcv_json)){
-            is_error_set = true;
+        if(!eoscCommandJson(path, postJson, jsonRcv)){
+             isErrorSet = true;
         }
       }
 
-      bool is_error() const {
-        return is_error_set;
+      bool isError() const {
+        return isErrorSet;
       }
 
-      boost::property_tree::ptree get_resp_json() const {
-        return rcv_json;
+      boost::property_tree::ptree getRcvJson() const {
+        return jsonRcv;
       }
 
-      std::string to_string_post() const;
-      std::string to_string_rcv() const;
+      std::string toStringPost() const;
+      std::string toStringRcv() const;
+
+      /**
+       * @brief Returns a value of a path of the received json.
+       * 
+       * @tparam Type 
+       * @param path 
+       * @return Type get 
+       */
       template<typename Type> 
       Type get(const boost::property_tree::ptree::path_type & path) const{
-        return get1<Type>(rcv_json, path);
+        return getJsonPath<Type>(jsonRcv, path);
     }  
   };
 
   //http://boost.cowic.de/rc/pdf/program_options.pdf
-  class command_options
+  /**
+   * @brief Command line options base.
+   * 
+   */
+  class CommandOptions
   {
     int argc;
     const char **argv;
+    std::string json;
 
     protected:
-      boost::property_tree::ptree post_json;
+
+      boost::property_tree::ptree postJson;
       virtual const char* get_usage(){return "";}
 
       virtual boost::program_options::options_description options(){
@@ -105,17 +202,16 @@ namespace tokenika::eosc{
         return false;
       }
 
-      virtual eosc_command get_command(bool is_raw){
-        return eosc_command("", post_json);
+      virtual EoscCommand get_command(bool isRaw){
+        return EoscCommand("", postJson);
       }
 
       virtual void get_example(){}
 
-      virtual void get_output(eosc_command command){
-        std::cout << command.to_string_rcv() << std::endl;
+      virtual void get_output(EoscCommand command){
+        std::cout << command.toStringRcv() << std::endl;
       }
 
-    std::string json;
     void common_options(boost::program_options::options_description& common){
       common.add_options()
         ("help,h", "Help screen")
@@ -128,7 +224,7 @@ namespace tokenika::eosc{
     }
 
     public:
-      command_options(int argc, const char **argv) : argc(argc), argv(argv) {}
+      CommandOptions(int argc, const char **argv) : argc(argc), argv(argv) {}
       void go();
   };
 

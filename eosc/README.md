@@ -101,8 +101,8 @@ Options:
 ./eosc get block --example
 ```
 ```
-Invoke 'get_info' command:
-get_info get_info;
+Invoke 'GetInfo' command:
+GetInfo GetInfo;
 
 {
     "head_block_num": "9939",
@@ -116,8 +116,8 @@ get_info get_info;
 
 
 Use reference to the last block:
-get_block get_block(
-  get_info.get<int>("last_irreversible_block_num"));
+GetBlock GetBlock(
+  GetInfo.get<int>("last_irreversible_block_num"));
 
 {
     "previous": "000026c35fb5d442be6d4e81a1347cce2c0184c4c2047d9e6dfc78b3bb325ac2",
@@ -142,15 +142,15 @@ Let you see a code snippet:
 #include <iostream>
 #include <string>
 
-#include "eosc_commands/eosc_get_commands.hpp"
+#include "EoscCommands/eosc_get_commands.hpp"
 
 int main(int argc, char *argv[])
 {
-  tokenika::eosc::get_info get_info; /* Call 'eosd' for 'get info'. */
-  tokenika::eosc::get_block get_block( /* Call 'eosd' for 'get block', the last one. */
-    get_info.get<int>("last_irreversible_block_num"));
+  tokenika::eosc::GetInfo GetInfo; /* Call 'eosd' for 'get info'. */
+  tokenika::eosc::GetBlock GetBlock( /* Call 'eosd' for 'get block', the last one. */
+    GetInfo.get<int>("last_irreversible_block_num"));
 
-  std::cout << get_block.to_string_rcv() << std::endl;/* Print the response. */
+  std::cout << GetBlock.toStringRcv() << std::endl;/* Print the response. */
 
   return 0;
 }

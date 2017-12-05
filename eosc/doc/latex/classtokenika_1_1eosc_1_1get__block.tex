@@ -2,7 +2,7 @@
 \label{classtokenika_1_1eosc_1_1get__block}\index{tokenika\+::eosc\+::get\+\_\+block@{tokenika\+::eosc\+::get\+\_\+block}}
 
 
-Retrieve a full block from the blockchain.  
+Retrieve a full block from a blockchain.  
 
 
 
@@ -11,45 +11,75 @@ Retrieve a full block from the blockchain.
 
 
 
-Inheritance diagram for tokenika\+:\+:eosc\+:\+:get\+\_\+block\+:
-% FIG 0
+Inheritance diagram for tokenika\+:\+:eosc\+:\+:get\+\_\+block\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{classtokenika_1_1eosc_1_1get__block__inherit__graph}
+\end{center}
+\end{figure}
 
 
-Collaboration diagram for tokenika\+:\+:eosc\+:\+:get\+\_\+block\+:
-% FIG 1
+Collaboration diagram for tokenika\+:\+:eosc\+:\+:get\+\_\+block\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=187pt]{classtokenika_1_1eosc_1_1get__block__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classtokenika_1_1eosc_1_1get__block_ae2c0ee2ee1f93c982be9644238ac2e08}\label{classtokenika_1_1eosc_1_1get__block_ae2c0ee2ee1f93c982be9644238ac2e08}} 
-{\bfseries get\+\_\+block} (const char $\ast$post\+\_\+json, bool raw=false)
-\item 
 \mbox{\Hypertarget{classtokenika_1_1eosc_1_1get__block_a8d6bd95d65d6bd8265dc3fb23e5e0350}\label{classtokenika_1_1eosc_1_1get__block_a8d6bd95d65d6bd8265dc3fb23e5e0350}} 
 {\bfseries get\+\_\+block} (boost\+::property\+\_\+tree\+::ptree post\+\_\+json, bool raw=false)
-\item 
-\mbox{\Hypertarget{classtokenika_1_1eosc_1_1get__block_aa10c691423132ab06125109f47fee9c8}\label{classtokenika_1_1eosc_1_1get__block_aa10c691423132ab06125109f47fee9c8}} 
-{\bfseries get\+\_\+block} (uint block\+\_\+number, bool raw=false)
-\item 
-\mbox{\Hypertarget{classtokenika_1_1eosc_1_1get__block_aa1ffb3b8232831490b3655cc2571b634}\label{classtokenika_1_1eosc_1_1get__block_aa1ffb3b8232831490b3655cc2571b634}} 
-{\bfseries get\+\_\+block} (std\+::string id, bool raw=false)
 \end{DoxyCompactItemize}
 \subsection*{Additional Inherited Members}
 
 
 \subsection{Detailed Description}
-Retrieve a full block from the blockchain. 
+Retrieve a full block from a blockchain. 
+
+Given a {\ttfamily boost\+::property\+\_\+tree\+::ptree json}, like (\href{#https://github.com/EOSIO/eosjs-json/blob/master/api/v1/chain.json}{\tt after eosjs-\/json}) \begin{DoxyVerb}* {"block_num_or_id":"uint32 | string"}.
+* \end{DoxyVerb}
+
+
+the constructor posts it to an E\+OS block socket, specified in the {\ttfamily eosc\+\_\+config.\+json} file. The responce of the blockchain is, again, a {\ttfamily boost\+::property\+\_\+tree\+::ptree json}. On error, the reaponce json is \textquotesingle{}\{\char`\"{}error\char`\"{}\+:\char`\"{}error message\char`\"{}\}, otherwise it is like (\href{#https://github.com/EOSIO/eosjs-json/blob/master/api/v1/chain.json}{\tt after eosjs-\/json}) \begin{DoxyVerb}* {
+* "previous":"uint32",
+* "timestamp":"2017-07-18T20:16:36",
+* "transaction_merkle_root":"uint32",
+* "producer":"uint16",
+* "producer_changes":"map<account_name, account_name>[]",
+* "producer_signature":"signature",
+* "cycles":"thread[]",
+* "id":"fixed_bytes33",
+* "block_num":"uint32",
+* "refBlockPrefix":"uint32"
+* }
+* \end{DoxyVerb}
+
+
+It is available with the tokenika\+::eosc\+::eosc\+\_\+command\+::get\+\_\+resp\+\_\+json() method.
+
+Note that time is a string. For processing, it has to be expressed as a structure and afterwords back to a string. Helper functions, namely tokenika\+::eosc\+::strToTime(const std\+::string).
+
+Example\+:
 
 \begin{DoxyVerb}* #include <stdio.h>
 * #include <stdlib.h>
 * #include <iostream>
 * #include <string>
-* #include "eosc_commands/eosc_get_commands.hpp"
+* #include <boost/property_tree/ptree.hpp>
+* #include "EoscCommands/eosc_get_commands.hpp"  
 * 
 * int main(int argc, char *argv[])
 * {
-* tokenika::eosc::get_info get_info; // Call 'eosd' for 'get info'.
-* tokenika::eosc::get_block get_block( // Call 'eosd' for 'get block', the last one.
-* get_info.get<int>("last_irreversible_block_num"));
-* std::cout << get_block.to_string_rcv() << std::endl; // Print the response.
+* boost::property_tree::ptree postJson;
+* postJson.put("block_num_or_id", 25);
+* tokenika::eosc::GetBlock GetBlock(GetInfo_post_json);
+* std::cout << GetBlock.get<int>("last_irreversible_block_num")) << std::endl;
+* boost::property_tree::ptree rcv_json = GetBlock.getRcvJson();
+* std::cout << GetBlock.toStringRcv() << std::endl; // Print the response json.
+* 
 * return 0;
 * }
 * \end{DoxyVerb}

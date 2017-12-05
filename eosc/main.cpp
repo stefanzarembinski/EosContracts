@@ -21,41 +21,41 @@ void test(){
 
   args = {"tokenika::eosc::command_options", "--xxx"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);
+  tokenika::eosc::set_options<tokenika::eosc::get_infoOptions>(args);
 
   args = {"tokenika::eosc::command_options", "--help", "--raw"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);
+  tokenika::eosc::set_options<tokenika::eosc::get_infoOptions>(args);
 
   args = {"tokenika::eosc::command_options", "--example"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);
+  tokenika::eosc::set_options<tokenika::eosc::get_infoOptions>(args);
 
   args = {"tokenika::eosc::command_options", "--block_num", "25"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_info_options>(args);  
+  tokenika::eosc::set_options<tokenika::eosc::get_infoOptions>(args);  
 
   args = {"tokenika::eosc::command_options", "--help", "--raw"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args);
+  tokenika::eosc::set_options<tokenika::eosc::get_blockOptions>(args);
 
   args = {"tokenika::eosc::command_options", "--example"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args);
+  tokenika::eosc::set_options<tokenika::eosc::get_blockOptions>(args);
 
   args = {"tokenika::eosc::command_options", "--block_num", "25"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args); 
+  tokenika::eosc::set_options<tokenika::eosc::get_blockOptions>(args); 
 
   args = {"tokenika::eosc::command_options", "--json", 
     R"EOF({"block_num_or_id":"25"})EOF"};
   cout << boost::algorithm::join(args, ", ") << endl;
-  tokenika::eosc::set_options<tokenika::eosc::get_block_options>(args); 
+  tokenika::eosc::set_options<tokenika::eosc::get_blockOptions>(args); 
 }
 
 #define IF_ELSE(name) \
 if(command_name == #name) \
-{tokenika::eosc::name##_options(argc, argv).go();} \
+{tokenika::eosc::name##Options(argc, argv).go();} \
 else
 
 int main(int argc, const char *argv[])
