@@ -49,7 +49,7 @@ namespace tokenika::eosc{
   /**
    * @brief Given a json, gets EOS blockchain responce.
    * 
-   * Given a json and a command path, for example `/v1/chain/GetInfo`, 
+   * Given a json and a command path, for example `/v1/chain/get_info`, 
    * gets EOS blockchain responce.
    * 
    * @param path command path
@@ -66,7 +66,7 @@ namespace tokenika::eosc{
   /**
    * @brief Given a json, gets EOS blockchain responce.
    * 
-   * Given a json tree and a command path (for example `/v1/chain/GetInfo`),
+   * Given a json tree and a command path (for example `/v1/chain/get_info`),
    * and EOS blockchain communication port (for example `8888`), 
    * and EOS blockchain server name (for example `localhost`),
    * gets EOS blockchain responce.
@@ -106,17 +106,17 @@ namespace tokenika::eosc{
     std::string json);
   
   /**
-   * @brief Basic connection to the blockchain
+   * @brief Basic connection to the blockchain.
    * 
-   * Given a command path (for example `/v1/chain/GetBlock`), and a json tree
+   * Given a command path (for example `/v1/chain/get_block`), and a json tree
    * (for example {"block_num_or_id"="25"}), 
-   * connects to the blockchain and receive a json reflacting an aspect of the
+   * connects to the blockchain and receives a json reflacting an aspect of the
    * blockchain state.
    * 
    * `EoscCommand` is the superclass for any specific command class in this 
    * library.
    * 
-   * Parameters of the connection used are specified in file `eosc_config.json`
+   * Parameters of the connection used are specified in file `eosc_config.json`,
    * in the root directory of the project.
    * 
    */
@@ -132,9 +132,9 @@ namespace tokenika::eosc{
 
     public:
       /**
-       * @brief Just initiates members and calls the blockchain
+       * @brief Just initiates members, and calls the blockchain
        * 
-       * @param path command path, for example `/v1/chain/GetBlock`
+       * @param path command path, for example `/v1/chain/get_block`
        * @param postJson json tree, for example {"block_num_or_id"="25"}
        * @param isRaw boolean, determines printout of the to-string methods
        */
@@ -149,23 +149,51 @@ namespace tokenika::eosc{
         }
       }
 
+      /**
+       * @brief Error flag.
+       * 
+       * @return true if EOS blockchain responce is normal
+       * @return false if EOS blockchain responce is not normal
+       */
       bool isError() const {
         return isErrorSet;
       }
 
+      /**
+       * @brief Blockchain responce
+       * 
+       * @return boost::property_tree::ptree blockchain responce 
+       */
       boost::property_tree::ptree getRcvJson() const {
         return jsonRcv;
       }
 
+      /**
+       * @brief Post json string representation
+       * 
+       * Returns post json string representation. I can be pretty or raw,
+       * depending ib the `isRaw` flag.
+       * 
+       * @return std::string post json string representation 
+       */
       std::string toStringPost() const;
+
+      /**
+       * @brief Received json string representation
+       * 
+       * Returns received json string representation. I can be pretty or raw,
+       * depending ib the `isRaw` flag.
+       * 
+       * @return std::string received json string representation 
+       */      
       std::string toStringRcv() const;
 
       /**
        * @brief Returns a value of a path of the received json.
        * 
-       * @tparam Type 
-       * @param path 
-       * @return Type get 
+       * @tparam Type type of the value
+       * @param path json tree path to the value
+       * @return Type the value of the given path
        */
       template<typename Type> 
       Type get(const boost::property_tree::ptree::path_type & path) const{
@@ -175,8 +203,13 @@ namespace tokenika::eosc{
 
   //http://boost.cowic.de/rc/pdf/program_options.pdf
   /**
-   * @brief Command line options base.
+   * @brief Command-line wrapper for eosc commands.
    * 
+   * The prototype for command-line wrappers for eosc commands. Defines 
+   * common options like 'help', 'example'. 
+   * 
+   * Also, the class defines virtual methods that are placeholders for 
+   * specific definitions of the command that is wrapped.
    */
   class CommandOptions
   {
@@ -184,35 +217,12 @@ namespace tokenika::eosc{
     const char **argv;
     std::string json;
 
-    protected:
-
-      boost::property_tree::ptree postJson;
-      virtual const char* get_usage(){return "";}
-
-      virtual boost::program_options::options_description options(){
-        boost::program_options::options_description special("");
-        return special;
-      }
-
-      virtual void
-        set_pos_desc(boost::program_options::positional_options_description& 
-          pos_descr){}
-
-      virtual bool set_json(boost::program_options::variables_map &vm){
-        return false;
-      }
-
-      virtual EoscCommand get_command(bool isRaw){
-        return EoscCommand("", postJson);
-      }
-
-      virtual void get_example(){}
-
-      virtual void get_output(EoscCommand command){
-        std::cout << command.toStringRcv() << std::endl;
-      }
-
-    void common_options(boost::program_options::options_description& common){
+    /**
+     * @brief List of options common to all commands.
+     * 
+     * @param common boost program options description object.
+     */
+    void commonOptions(boost::program_options::options_description& common){
       common.add_options()
         ("help,h", "Help screen")
         ("json,j", 
@@ -223,12 +233,81 @@ namespace tokenika::eosc{
         ("example,e", "Usage example");
     }
 
+    protected:
+
+      boost::property_tree::ptree postJson;
+
+      /**
+       * @brief Command 'usage' instruction.
+       * 
+       * @return const char* usage text
+       */
+      virtual const char* get_usage(){return "";}
+
+      /**
+       * @brief List of the command options.
+       * 
+       * @return boost::program_options::options_description command options
+       */
+      virtual boost::program_options::options_description options(){
+        boost::program_options::options_description special("");
+        return special;
+      }
+
+      /**
+       * @brief Positional options.
+       * 
+       * @param pos_descr positional options
+       */
+      virtual void
+        setPosDesc(boost::program_options::positional_options_description& 
+          pos_descr){}
+
+      /**
+       * @brief Fills the post json tree according to options.
+       * 
+       * @param vm boost program options variable map
+       * @return true if post json is set completely
+       * @return false if post json cannot be set completely
+       */
+      virtual bool setJson(boost::program_options::variables_map &vm){
+        return false;
+      }
+
+      /**
+       * @brief Returns command object, containing a responce from the blockchain.
+       * 
+       * @param isRaw raw or pretty printout flag
+       * @return EoscCommand command object
+       */
+      virtual EoscCommand getCommand(bool isRaw){
+        return EoscCommand("", postJson);
+      }
+
+      /**
+       * @brief Placeholder for any exemplary code snippet.
+       * 
+       */
+      virtual void getExample(){}
+
+      /**
+       * @brief Placeholder for printout instructions.
+       * 
+       * Placeholder for printout instructions. Printout should be composed 
+       * with the ::output(const char*, const char*, ...) function.
+       * 
+       * @param command command object, containing a responce from the blockchain.
+       */
+      virtual void getOutput(EoscCommand command){
+        std::cout << command.toStringRcv() << std::endl;
+      }
+
     public:
       CommandOptions(int argc, const char **argv) : argc(argc), argv(argv) {}
       void go();
   };
 
-  template<class T> static void set_options(std::vector<std::string> strVector){
+  template<class T> static void setOptions(std::vector<std::string> strVector){
     std::vector<const char*> cStrArray;
     cStrArray.reserve(strVector.size());
     for(int index = 0; index < strVector.size(); ++index)

@@ -33,24 +33,24 @@ namespace tokenika::eosc
    * int main(int argc, char *argv[])
    * {
    * boost::property_tree::ptree postJson;
-   * tokenika::eosc::GetInfo GetInfo(getInfoPostJson);
-   * std::cout << GetInfo.get<int>("last_irreversible_block_num")) << std::endl;
-   * boost::property_tree::ptree rcv_json = GetInfo.getRcvJson();
-   * std::cout << GetBlock.toStringRcv() << std::endl; // Print the response json.
+   * tokenika::eosc::get_info get_info(getInfoPostJson);
+   * std::cout << get_info.get<int>("last_irreversible_block_num")) << std::endl;
+   * boost::property_tree::ptree rcv_json = get_info.getRcvJson();
+   * std::cout << get_block.toStringRcv() << std::endl; // Print the response json.
    * 
    * return 0;
    * }
    * @endverbatim
    */
-  class GetInfo : public EoscCommand
+  class get_info : public EoscCommand
   {
   public:
   
-    GetInfo(
+    get_info(
       boost::property_tree::ptree postJson, 
       bool raw = false) 
       : EoscCommand(
-          "/v1/chain/GetInfo",
+          "/v1/chain/get_info",
           postJson,
           raw){}
   };
@@ -69,28 +69,28 @@ Usage: ./eosc get info [Options]
 Usage: ./eosc get info [-j '{}'] [OPTIONS]
 )EOF";}
 
-      virtual bool set_json(boost::program_options::variables_map &vm){
+      virtual bool setJson(boost::program_options::variables_map &vm){
         return true;
       }
 
-      virtual EoscCommand get_command(bool is_raw){
-        return GetInfo(postJson, is_raw);
+      virtual EoscCommand getCommand(bool is_raw){
+        return get_info(postJson, is_raw);
       }
 
-      virtual void get_output(tokenika::eosc::EoscCommand command){
+      virtual void getOutput(tokenika::eosc::EoscCommand command){
         output("head block", "%d", command.get<int>("head_block_num"));
         output("head block time", "%s", command.get<int>("head_block_time"));
         output("last irreversible block", "%d", command.get<int>("last_irreversible_block_num"));
       }
 
-      virtual void get_example(){
+      virtual void getExample(){
         boost::property_tree::ptree postJson;
-        GetInfo GetInfo(postJson);
+        get_info get_info(postJson);
         std::cout << R"EOF(
-Invoke 'GetInfo' command:
-GetInfo GetInfo;
+Invoke 'get_info' command:
+get_info get_info;
 )EOF" << std::endl;
-        std::cout << GetInfo.toStringRcv() << std::endl;
+        std::cout << get_info.toStringRcv() << std::endl;
       }
   };
 
@@ -149,7 +149,7 @@ GetInfo GetInfo;
    * {
    * boost::property_tree::ptree postJson;
    * postJson.put("block_num_or_id", 25);
-   * tokenika::eosc::GetBlock getBlock(getInfoPostJson);
+   * tokenika::eosc::get_block getBlock(getInfoPostJson);
    * if(!getBlock.isError())
    * {
    *    std::cout << getBlock.get<int>("last_irreversible_block_num")) << std::endl;
@@ -166,13 +166,13 @@ GetInfo GetInfo;
    * }
    * @endverbatim
    */
-  class GetBlock : public EoscCommand
+  class get_block : public EoscCommand
   {
   public:
 
-    GetBlock(boost::property_tree::ptree postJson, bool raw = false) 
+    get_block(boost::property_tree::ptree postJson, bool raw = false) 
         : EoscCommand(
-          "/v1/chain/GetBlock",
+          "/v1/chain/get_block",
           postJson,
           raw){}
   };
@@ -207,12 +207,12 @@ Usage: ./eosc get block [-j '{"block_num_or_id":"int | string"}'] [OPTIONS]
       }
 
       virtual void
-        set_pos_desc(boost::program_options::positional_options_description& 
+        setPosDesc(boost::program_options::positional_options_description& 
         pos_desc){
         pos_desc.add("block_num", 1);
       }
 
-      virtual bool set_json(boost::program_options::variables_map &vm){
+      virtual bool setJson(boost::program_options::variables_map &vm){
         bool ok = false;
         if(vm.count("block_num")){
           postJson.put("block_num_or_id", n);
@@ -224,34 +224,34 @@ Usage: ./eosc get block [-j '{"block_num_or_id":"int | string"}'] [OPTIONS]
         return ok;
       }
 
-      virtual EoscCommand get_command(bool is_raw){
-        return GetBlock(postJson, is_raw);
+      virtual EoscCommand getCommand(bool is_raw){
+        return get_block(postJson, is_raw);
       }
 
-      virtual void get_output(EoscCommand command){
+      virtual void getOutput(EoscCommand command){
         output("block number", "%d", command.get<int>("block_num"));
         output("timestamp", "%s", command.get<std::string>("timestamp").c_str());
         output("ref block prefix", "%s",command.get<std::string>("refBlockPrefix").c_str());
       }
 
-      virtual void get_example(){
+      virtual void getExample(){
         boost::property_tree::ptree getInfoPostJson;
-        GetInfo GetInfo(getInfoPostJson);
+        get_info get_info(getInfoPostJson);
         std::cout << R"EOF(
-Invoke 'GetInfo' command:
-GetInfo GetInfo;
+Invoke 'get_info' command:
+get_info get_info;
 )EOF" << std::endl;
 
-        std::cout << GetInfo.toStringRcv() << std::endl;
+        std::cout << get_info.toStringRcv() << std::endl;
         boost::property_tree::ptree GetBlock_post_json;
         GetBlock_post_json.put("block_num_or_id", 25);
-        GetBlock GetBlock(GetBlock_post_json);
+        get_block get_block(GetBlock_post_json);
         std::cout << R"EOF(
 Use reference to the last block:
-GetBlock GetBlock(
-  GetInfo.get<int>("last_irreversible_block_num"));
+get_block get_block(
+  get_info.get<int>("last_irreversible_block_num"));
 )EOF" << std::endl;
-        std::cout << GetBlock.toStringRcv() << std::endl;
+        std::cout << get_block.toStringRcv() << std::endl;
       }
   };
 }

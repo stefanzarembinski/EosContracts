@@ -36,7 +36,7 @@ namespace tokenika::eosc{
       return strToTime(json.get<std::string>(path));
   }
 
-  struct init_get1{
+  struct InitGetJson{
     /*
     Template function has to be used, in order to force compiler
     to build specific forms needed elsewhere in the program and 
@@ -47,7 +47,7 @@ namespace tokenika::eosc{
     float floatVal;
     boost::posix_time::ptime ptime;
 
-    init_get1(){
+    InitGetJson(){
       try{
         boost::property_tree::ptree json;
         boost::property_tree::ptree::path_type path;
@@ -59,7 +59,7 @@ namespace tokenika::eosc{
       } catch(...){}
     }
   };
-  init_get1 init;
+  InitGetJson init;
 
   boost::posix_time::ptime strToTime(const std::string str){
     std::string temp = boost::replace_all_copy(str, "-", "");
@@ -245,11 +245,11 @@ namespace tokenika::eosc{
 
       boost::program_options::options_description desc{"Options"};
       boost::program_options::options_description common("");
-      common_options(common);
+      commonOptions(common);
       desc.add(options()).add(common);
 
       boost::program_options::positional_options_description pos_desc;
-      set_pos_desc(pos_desc);
+      setPosDesc(pos_desc);
 
       boost::program_options::command_line_parser parser{argc, argv};
       parser.options(desc).positional(pos_desc);//.allow_unregistered();
@@ -259,7 +259,7 @@ namespace tokenika::eosc{
       store(parsed_options, vm);
       notify(vm);
     
-      bool is_arg = set_json(vm) || vm.count("json");
+      bool is_arg = setJson(vm) || vm.count("json");
       if(vm.count("json")){
         postJson = stringToPtree(json);
       }
@@ -269,13 +269,13 @@ namespace tokenika::eosc{
         std::cout << get_usage() << std::endl;
         std::cout << desc << std::endl;
       } else if(vm.count("example")){
-          get_example();
+          getExample();
       } else if(is_arg){
-        EoscCommand command = get_command(isRaw);
+        EoscCommand command = getCommand(isRaw);
         if(vm.count("received")){
           std::cout << command.toStringRcv() << std::endl;
         } else{
-          get_output(command);
+          getOutput(command);
         }
       } else if (vm.count("unreg")){
         std::cout << get_usage() << std::endl;

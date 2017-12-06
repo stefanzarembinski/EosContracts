@@ -24,9 +24,9 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \begin{DoxyCompactItemize}
 \item 
 class \hyperlink{classtokenika_1_1eosc_1_1_eosc_command}{tokenika\+::eosc\+::\+Eosc\+Command}
-\item 
+\begin{DoxyCompactList}\small\item\em Basic connection to the blockchain. \end{DoxyCompactList}\item 
 class \hyperlink{classtokenika_1_1eosc_1_1_command_options}{tokenika\+::eosc\+::\+Command\+Options}
-\begin{DoxyCompactList}\small\item\em Command line options base. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Command-\/line wrapper for eosc commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -44,12 +44,10 @@ bool {\bfseries tokenika\+::eosc\+::eosc\+Command\+Json} (std\+::string path, bo
 \begin{DoxyCompactList}\small\item\em Given a json, gets E\+OS blockchain responce. \end{DoxyCompactList}\item 
 void {\bfseries tokenika\+::eosc\+::call\+Eosd} (std\+::string server, std\+::string port, std\+::string path, boost\+::property\+\_\+tree\+::ptree \&post\+Json, boost\+::property\+\_\+tree\+::ptree \&json\+Rcv)
 \begin{DoxyCompactList}\small\item\em Given a json, gets E\+OS blockchain responce. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{eosc__command_8cpp_a2d300c178b2b0dd2e1762fc6c14ee6e1}\label{eosc__command_8cpp_a2d300c178b2b0dd2e1762fc6c14ee6e1}} 
 {\footnotesize template$<$typename Type $>$ }\\Type {\bfseries tokenika\+::eosc\+::get\+Json\+Path} (boost\+::property\+\_\+tree\+::ptree json, const boost\+::property\+\_\+tree\+::ptree\+::path\+\_\+type \&path)
-\item 
-\mbox{\Hypertarget{eosc__command_8cpp_af9b6ab6f20b7788c731d72918b206878}\label{eosc__command_8cpp_af9b6ab6f20b7788c731d72918b206878}} 
-boost\+::property\+\_\+tree\+::ptree {\bfseries tokenika\+::eosc\+::string\+\_\+to\+\_\+ptree} (std\+::string json)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Given a json tree, returns the $<$\+Type$>$value of a given path. \end{DoxyCompactList}\item 
+boost\+::property\+\_\+tree\+::ptree {\bfseries tokenika\+::eosc\+::string\+To\+Ptree} (std\+::string json)
+\begin{DoxyCompactList}\small\item\em Given a text json tree, returns the equivalent {\ttfamily boost ptree}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -69,7 +67,7 @@ defined in resources/\+L\+I\+C\+E\+N\+S\+E.\+txt
 
 Given a json, gets E\+OS blockchain responce. 
 
-Given a json tree and a command path (for example {\ttfamily /v1/chain/\+Get\+Info}), and E\+OS blockchain communication port (for example {\ttfamily 8888}), and E\+OS blockchain server name (for example {\ttfamily localhost}), gets E\+OS blockchain responce.
+Given a json tree and a command path (for example {\ttfamily /v1/chain/get\+\_\+info}), and E\+OS blockchain communication port (for example {\ttfamily 8888}), and E\+OS blockchain server name (for example {\ttfamily localhost}), gets E\+OS blockchain responce.
 
 
 \begin{DoxyParams}{Parameters}
@@ -94,7 +92,7 @@ Given a json tree and a command path (for example {\ttfamily /v1/chain/\+Get\+In
 
 Given a json, gets E\+OS blockchain responce. 
 
-Given a json and a command path, for example {\ttfamily /v1/chain/\+Get\+Info}, gets E\+OS blockchain responce.
+Given a json and a command path, for example {\ttfamily /v1/chain/get\+\_\+info}, gets E\+OS blockchain responce.
 
 
 \begin{DoxyParams}{Parameters}
@@ -109,6 +107,32 @@ Given a json and a command path, for example {\ttfamily /v1/chain/\+Get\+Info}, 
 true if E\+OS blockchain responce is normal 
 
 false if E\+OS blockchain responce is not normal 
+\end{DoxyReturn}
+\mbox{\Hypertarget{eosc__command_8cpp_file_a2d300c178b2b0dd2e1762fc6c14ee6e1}\label{eosc__command_8cpp_file_a2d300c178b2b0dd2e1762fc6c14ee6e1}} 
+\index{eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}!get\+Json\+Path@{get\+Json\+Path}}
+\index{get\+Json\+Path@{get\+Json\+Path}!eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}}
+\subsubsection{\texorpdfstring{get\+Json\+Path()}{getJsonPath()}}
+{\footnotesize\ttfamily template$<$typename Type $>$ \\
+Type tokenika\+::eosc\+::get\+Json\+Path (\begin{DoxyParamCaption}\item[{boost\+::property\+\_\+tree\+::ptree}]{json,  }\item[{const boost\+::property\+\_\+tree\+::ptree\+::path\+\_\+type \&}]{path }\end{DoxyParamCaption})}
+
+
+
+Given a json tree, returns the $<$\+Type$>$value of a given path. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Type} & type of the called value \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em json} & json tree \\
+\hline
+{\em path} & path of the given tree \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Type 
 \end{DoxyReturn}
 \mbox{\Hypertarget{eosc__command_8cpp_file_a03be7086d7980dc8c27b7aaaf8973771}\label{eosc__command_8cpp_file_a03be7086d7980dc8c27b7aaaf8973771}} 
 \index{eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}!output@{output}}
@@ -131,6 +155,24 @@ For example, {\ttfamily output(\char`\"{}timestamp\char`\"{}, \char`\"{}\%s\char
 {\em ...} & \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{eosc__command_8cpp_file_a0ce29794654e913a1069e28530f4fe46}\label{eosc__command_8cpp_file_a0ce29794654e913a1069e28530f4fe46}} 
+\index{eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}!string\+To\+Ptree@{string\+To\+Ptree}}
+\index{string\+To\+Ptree@{string\+To\+Ptree}!eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}}
+\subsubsection{\texorpdfstring{string\+To\+Ptree()}{stringToPtree()}}
+{\footnotesize\ttfamily boost\+::property\+\_\+tree\+::ptree tokenika\+::eosc\+::string\+To\+Ptree (\begin{DoxyParamCaption}\item[{std\+::string}]{json }\end{DoxyParamCaption})}
+
+
+
+Given a text json tree, returns the equivalent {\ttfamily boost ptree}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boost\+::property\+\_\+tree\+::ptree 
+\end{DoxyReturn}
 \mbox{\Hypertarget{eosc__command_8cpp_file_af36b60963055656769794bd43927654c}\label{eosc__command_8cpp_file_af36b60963055656769794bd43927654c}} 
 \index{eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}!str\+To\+Time@{str\+To\+Time}}
 \index{str\+To\+Time@{str\+To\+Time}!eosc\+\_\+command.\+hpp@{eosc\+\_\+command.\+hpp}}
