@@ -19,9 +19,13 @@ set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system date_time program_options)
 
-set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-set(THREADS_PREFER_PTHREAD_FLAG TRUE)
-find_package(Threads REQUIRED)
+IF( WIN32 )
+
+ELSEIF( WIN32 )
+  set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+  set(THREADS_PREFER_PTHREAD_FLAG TRUE)
+  find_package(Threads REQUIRED)
+ENDIF( WIN32 )
 
 include_directories(${Boost_INCLUDE_DIRS})
 

@@ -1,9 +1,7 @@
 /**
  * @file eosc_command.hpp
  * @copyright defined in resources/LICENSE.txt
- * @defgroup eosc Tokenika-EOS Command Line Client Reference
  * @brief Tool for sending transactions and querying state from EOS blockchain
- * @ingroup eosc
  * 
  * @brief Base definitions.
  * 

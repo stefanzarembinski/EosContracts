@@ -1,5 +1,5 @@
 /**
- * @file eosc_get_command.hpp
+ * @file eosc_get_commands.hpp
  *
  * Definitions for get-type commands.
  *

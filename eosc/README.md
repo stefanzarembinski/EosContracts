@@ -1,5 +1,19 @@
 # Tokenika alternative for the EOS *eosc* program
-## Rationale
+
+<a name="toc"></a>
+## Table of contents
+
+* [Rationale](#rationale)
+  * [Richer API](#richer)
+    * [EOS](#richereos)
+    * [Tokenika](#richertokenika)
+* [Building](#building)
+  * [Dependencies](#dependencies)
+  * [Linux, Mac, ect.](#linux)
+  * [Windows](#windows)
+
+<a name="rationale"></a>
+## [Rationale](#toc)
 
 For our work with eos small contracts, we have found that the original EOS `eosc` interface program is too much restrictive. First, it is hard to be used programmatically in a C++ code. Next, it is quite heavy as it is tightly connected to the whole of the EOS code. Also, it is not ready to be used in the Windows environment, while we plan to open Windows based contract development possibility.
 
@@ -9,9 +23,11 @@ Finally, to make our work competitive to the original, and for fun, we have adde
 
 We already know how to use this richness: it is much ease to make a tool as tokenika [`eoscBash`](#) that wraps the EOS `eosc` for bookkeeping.
 
-## Richer API
+<a name="richer"></a>
+## [Richer API](#toc)
 
-### EOS
+<a name="richereos"></a>
+### [EOS](#toc)
 ```
 ./eosc get block -h
 ```
@@ -41,6 +57,7 @@ Positionals:
 }
 ```
 
+<a name="richtokenika"></a>
 ### Tokenika
 
 ```
@@ -169,5 +186,32 @@ Here is the print-out:
     "refBlockPrefix": "3020202302"
 }
 
+```
+
+<a name="building"></a>
+## [Building](#toc)
+
+<a name="dependencies"></a>
+### [Dependencies](#toc)
+
+<a name="linux"></a>
+### [Linux, Mac, ect.](#toc)
+
+<a name="windows"></a>
+### [Windows](#toc)
+
+```
+>mkdir build_win
+>cd build_win
+
+build_win>cmake ..
+-- Building for: Visual Studio 15 2017
+
+...........................................
+...........................................
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: E:/Workspaces/EOS/Pentagon/eosc/build_win
 ```
 
