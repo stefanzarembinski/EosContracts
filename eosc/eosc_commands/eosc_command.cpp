@@ -266,7 +266,7 @@ namespace tokenika::eosc{
       isRaw = vm.count("raw");
 
       if (vm.count("help")){
-        std::cout << get_usage() << std::endl;
+        std::cout << getUsage() << std::endl;
         std::cout << desc << std::endl;
       } else if(vm.count("example")){
           getExample();
@@ -275,10 +275,16 @@ namespace tokenika::eosc{
         if(vm.count("received")){
           std::cout << command.toStringRcv() << std::endl;
         } else{
-          getOutput(command);
+          if(command.isError())
+          {
+            std::cerr << command.get<std::string>(ERROR) << std::endl;
+          } else 
+          {
+            getOutput(command);
+          }
         }
       } else if (vm.count("unreg")){
-        std::cout << get_usage() << std::endl;
+        std::cout << getUsage() << std::endl;
         std::cout << desc << std::endl;
       }
     } catch (const boost::program_options::error &ex){

@@ -49,7 +49,7 @@ namespace tokenika::eosc{
   /**
    * @brief Given a json, gets EOS blockchain responce.
    * 
-   * Given a json and a command path, for example `/v1/chain/get_info`, 
+   * Given a json and a command path, for example `/v1/chain/GetInfo`, 
    * gets EOS blockchain responce.
    * 
    * @param path command path
@@ -66,7 +66,7 @@ namespace tokenika::eosc{
   /**
    * @brief Given a json, gets EOS blockchain responce.
    * 
-   * Given a json tree and a command path (for example `/v1/chain/get_info`),
+   * Given a json tree and a command path (for example `/v1/chain/GetInfo`),
    * and EOS blockchain communication port (for example `8888`), 
    * and EOS blockchain server name (for example `localhost`),
    * gets EOS blockchain responce.
@@ -108,7 +108,7 @@ namespace tokenika::eosc{
   /**
    * @brief Basic connection to the blockchain.
    * 
-   * Given a command path (for example `/v1/chain/get_block`), and a json tree
+   * Given a command path (for example `/v1/chain/GetBlock`), and a json tree
    * (for example {"block_num_or_id"="25"}), 
    * connects to the blockchain and receives a json reflacting an aspect of the
    * blockchain state.
@@ -134,7 +134,7 @@ namespace tokenika::eosc{
       /**
        * @brief Just initiates members, and calls the blockchain
        * 
-       * @param path command path, for example `/v1/chain/get_block`
+       * @param path command path, for example `/v1/chain/GetBlock`
        * @param postJson json tree, for example {"block_num_or_id"="25"}
        * @param isRaw boolean, determines printout of the to-string methods
        */
@@ -235,6 +235,9 @@ namespace tokenika::eosc{
 
     protected:
 
+      /**
+       * @brief json tree to be filled with blockchain responce. 
+       */
       boost::property_tree::ptree postJson;
 
       /**
@@ -242,7 +245,7 @@ namespace tokenika::eosc{
        * 
        * @return const char* usage text
        */
-      virtual const char* get_usage(){return "";}
+      virtual const char* getUsage(){return "";}
 
       /**
        * @brief List of the command options.
@@ -275,7 +278,7 @@ namespace tokenika::eosc{
       }
 
       /**
-       * @brief Returns command object, containing a responce from the blockchain.
+       * @brief Returns command object, containing a responce frosource /mnt/hgfs/Workspaces/EOS/eoscBash/eoscBash $EOSIO_INSTALL_DIR m the blockchain.
        * 
        * @param isRaw raw or pretty printout flag
        * @return EoscCommand command object
@@ -284,7 +287,7 @@ namespace tokenika::eosc{
         return EoscCommand("", postJson);
       }
 
-      /**
+      /**source /mnt/hgfs/Workspaces/EOS/eoscBash/eoscBash $EOSIO_INSTALL_DIR 
        * @brief Placeholder for any exemplary code snippet.
        * 
        */
@@ -307,6 +310,16 @@ namespace tokenika::eosc{
       void go();
   };
 
+  /**
+   * @brief Wrapper for CommandOptions descendants, for tests.
+   * 
+   * Descendants of the CommandOptions class take arguments of the `main` function.
+   * The setOptions() template wrapper takes `std::vector<std::string>` argument 
+   * and converts it to its client standard.
+   * 
+   * @tparam T 
+   * @param strVector 
+   */
   template<class T> static void setOptions(std::vector<std::string> strVector){
     std::vector<const char*> cStrArray;
     cStrArray.reserve(strVector.size());

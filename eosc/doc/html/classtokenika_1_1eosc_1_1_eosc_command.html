@@ -82,8 +82,8 @@ Inheritance diagram for tokenika::eosc::EoscCommand:</div>
 <div class="dyncontent">
 <div class="center"><img src="classtokenika_1_1eosc_1_1_eosc_command__inherit__graph.png" border="0" usemap="#tokenika_1_1eosc_1_1_eosc_command_inherit__map" alt="Inheritance graph"/></div>
 <map name="tokenika_1_1eosc_1_1_eosc_command_inherit__map" id="tokenika_1_1eosc_1_1_eosc_command_inherit__map">
-<area shape="rect" id="node2" href="classtokenika_1_1eosc_1_1get__block.html" title="Retrieve a full block from a blockchain. " alt="" coords="5,80,139,121"/>
-<area shape="rect" id="node3" href="classtokenika_1_1eosc_1_1get__info.html" title="Get current blockchain information. " alt="" coords="163,87,325,114"/>
+<area shape="rect" id="node2" href="classtokenika_1_1eosc_1_1_get_block.html" title="Retrieve a full block from a blockchain. " alt="" coords="5,80,175,107"/>
+<area shape="rect" id="node3" href="classtokenika_1_1eosc_1_1_get_info.html" title="Get current blockchain information. " alt="" coords="199,80,357,107"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -117,7 +117,7 @@ boost::property_tree::ptree&#160;</td><td class="memItemRight" valign="bottom"><
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Basic connection to the blockchain. </p>
-<p>Given a command path (for example <code>/v1/chain/get_block</code>), and a json tree (for example {"block_num_or_id"="25"}), connects to the blockchain and receives a json reflacting an aspect of the blockchain state.</p>
+<p>Given a command path (for example <code>/v1/chain/GetBlock</code>), and a json tree (for example {"block_num_or_id"="25"}), connects to the blockchain and receives a json reflacting an aspect of the blockchain state.</p>
 <p><code><a class="el" href="classtokenika_1_1eosc_1_1_eosc_command.html" title="Basic connection to the blockchain. ">EoscCommand</a></code> is the superclass for any specific command class in this library.</p>
 <p>Parameters of the connection used are specified in file <code>eosc_config.json</code>, in the root directory of the project. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -164,7 +164,7 @@ boost::property_tree::ptree&#160;</td><td class="memItemRight" valign="bottom"><
 <p>Just initiates members, and calls the blockchain. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>command path, for example <code>/v1/chain/get_block</code> </td></tr>
+    <tr><td class="paramname">path</td><td>command path, for example <code>/v1/chain/GetBlock</code> </td></tr>
     <tr><td class="paramname">postJson</td><td>json tree, for example {"block_num_or_id"="25"} </td></tr>
     <tr><td class="paramname">isRaw</td><td>boolean, determines printout of the to-string methods </td></tr>
   </table>
